@@ -1,0 +1,32 @@
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         verbose="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+    <testsuite name="Main Test Suite">
+        <directory>./</directory>
+    </testsuite>
+    <filter>
+        <blacklist>
+            <directory suffix=".php">./tests</directory>
+        </blacklist>
+        <whitelist>
+            <directory suffix=".php">./source</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html"
+             target="./code-coverage"
+             charset="UTF-8"
+             yui="true"
+             highlight="true"
+             lowUpperBound="50"
+             highLowerBound="80"/>
+        <log type="coverage-clover"
+             target="./code-coverage/coverage.clover"/>
+    </logging>
+</phpunit>
