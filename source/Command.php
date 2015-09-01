@@ -9,3 +9,9 @@ class Command
         echo __METHOD__;
     }
 }
+
+/*
+    "scripts": {
+        "yii2-autocomplete": "iiifx\\yii2\\autocomplete\\Command::execute"
+    }
+*/
