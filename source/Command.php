@@ -33,7 +33,7 @@ class Command
      */
     public function getApplicationPath ()
     {
-        return FileHelper::normalizePath( dirname( dirname( dirname( __DIR__ ) ) ) );
+        return FileHelper::normalizePath( dirname( dirname( dirname( dirname( __DIR__ ) ) ) ) );
     }
 }
 
