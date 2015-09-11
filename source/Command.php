@@ -9,31 +9,122 @@ class Command
     /**
      *
      */
-    public static function execute ()
-    {
-        ( new self() )->checkSimple()->checkAdvanced();
-    }
-
+    const APP_SIMPLE = 1;
+    /**
+     *
+     */
+    const APP_ADVANCED = 2;
 
     /**
-     * @return $this
+     * @var mixed[]
      */
-    protected function checkSimple ()
+    public static $configList = [
+        self::APP_SIMPLE => [ ],
+        self::APP_ADVANCED => [
+            'backend/config/main.php',
+            'backend/config/main-local.php',
+            'common/config/main.php',
+            'common/config/main-local.php',
+            'frontend/config/main.php',
+            'frontend/config/main-local.php',
+        ],
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $componentMap = [ ];
+
+    /**
+     *
+     */
+    public static function execute ()
     {
-        return $this;
+        ( new self() )->check();
     }
 
-    protected function checkAdvanced ()
+    /**
+     *
+     */
+    protected function check ()
     {
-        echo $this->getApplicationPath();
+        foreach ( $this->getSimpleList() as $path ) {
+            $this->readConfigFile( $path );
+        }
+        foreach ( $this->getAdvancedList() as $path ) {
+            $this->readConfigFile( $path );
+        }
+        $this->buildAutocomplete();
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getSimpleList ()
+    {
+        $list = [ ];
+        if ( isset( self::$configList[ self::APP_SIMPLE ] ) ) {
+            foreach ( (array) self::$configList[ self::APP_SIMPLE ] as $file ) {
+                if ( ( $file = $this->checkPath( $file ) ) ) {
+                    $list[] = $file;
+                }
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAdvancedList ()
+    {
+        $list = [ ];
+        if ( isset( self::$configList[ self::APP_ADVANCED ] ) ) {
+            foreach ( (array) self::$configList[ self::APP_ADVANCED ] as $file ) {
+                if ( ( $file = $this->checkPath( $file ) ) ) {
+                    $list[] = $file;
+                }
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * @param $path
+     */
+    protected function readConfigFile ( $path )
+    {
+        /** @noinspection PhpIncludeInspection */
+        $content = require( $path );
+
+        var_export( $content ); die();
+    }
+
+    /**
+     *
+     */
+    protected function buildAutocomplete ()
+    {
+
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string|bool
+     */
+    protected function checkPath ( $path )
+    {
+        $path = FileHelper::normalizePath( $this->getAppPath() . '/' . ltrim( $path, '\/' ) );
+        return ( is_file( $path ) ) ? $path : FALSE;
     }
 
     /**
      * @return string
      */
-    public function getApplicationPath ()
+    protected function getAppPath ()
     {
-        return FileHelper::normalizePath( dirname( dirname( dirname( dirname( __DIR__ ) ) ) ) );
+        return FileHelper::normalizePath( dirname( dirname( dirname( dirname( __DIR__ ) ) ) ) ); # TODO LazyInit
     }
 }
 
