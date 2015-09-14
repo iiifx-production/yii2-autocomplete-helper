@@ -2,6 +2,7 @@
 
 namespace iiifx\yii2\autocomplete;
 
+use Yii;
 use yii\helpers\FileHelper;
 
 class Command
@@ -40,7 +41,17 @@ class Command
      */
     public static function execute ()
     {
-        ( new self() )->check();
+        ( new self() )->connectYii2()->check();
+    }
+
+    /**
+     * @return $this
+     */
+    protected function connectYii2 ()
+    {
+        /** @noinspection PhpIncludeInspection */
+        require( FileHelper::normalizePath( $this->getAppPath() . '/vendor/yiisoft/yii2/Yii.php' ) );
+        return $this;
     }
 
     /**
@@ -95,9 +106,16 @@ class Command
     protected function readConfigFile ( $path )
     {
         /** @noinspection PhpIncludeInspection */
-        $content = require( $path );
-
-        var_export( $content ); die();
+        $config = require( $path );
+        if ( isset( $config[ 'components' ] ) ) {
+            foreach ( (array) $config[ 'components' ] as $component => $params ) {
+                if ( is_array( $params ) && isset( $params[ 'class' ] ) ) {
+                    $this->componentMap[ $component ] = $params[ 'class' ];
+                } elseif ( is_string( $params ) ) {
+                    $this->componentMap[ $component ] = $params;
+                }
+            }
+        }
     }
 
     /**
@@ -105,7 +123,41 @@ class Command
      */
     protected function buildAutocomplete ()
     {
+        if ( !$this->componentMap ) return;
+        $template = <<<'PHP'
+<?php
 
+class Yii extends \yii\BaseYii
+{
+    /**
+     * @var BaseApplication|WebApplication|ConsoleApplication
+     */
+    public static $app;
+}
+
+/**
+%propertyList%
+ */
+abstract class BaseApplication extends \yii\base\Application {}
+
+/**
+%propertyList%
+ */
+class WebApplication extends \yii\web\Application {}
+
+/**
+%propertyList%
+ */
+class ConsoleApplication extends \yii\console\Application {}
+
+PHP;
+        $propertyList = '';
+        foreach ( $this->componentMap as $name => $class ) {
+            $propertyList .= " * @property {$class} ${$name}" . PHP_EOL;
+        }
+        $propertyList = rtrim( $propertyList, PHP_EOL );
+        $content = str_replace( '%propertyList%', $propertyList, $template );
+        file_put_contents( FileHelper::normalizePath( $this->getAppPath() . '/autocomplete.php' ), $content );
     }
 
     /**
