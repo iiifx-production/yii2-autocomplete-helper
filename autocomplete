@@ -17,38 +17,34 @@ $projectPath = $vendorPath . '/..';
 require $vendorPath . '/autoload.php';
 require $vendorPath . '/yiisoft/yii2/Yii.php';
 
-$basic = new Reader( [
-    'path' => $projectPath,
-    'files' => [
-        'config/web.php',
-        'config/console.php',
+$variants = [
+    'basic' => [
+        'path' => $projectPath,
+        'files' => [
+            'config/web.php',
+            'config/console.php',
+        ],
     ],
-] );
-
-if ( $basic->isValid() ) {
-    $result = ( new Builder( [
-        'reader' => $basic,
-    ] ) )->build( $projectPath . '/autocomplete.php' );
-
-    die( ( $result ? 'Done.' : 'Fail.' ) . PHP_EOL );
-}
-
-$advanced = new Reader( [
-    'path' => $projectPath,
-    'files' => [
-        'backend/config/main.php',
-        'common/config/main.php',
-        'console/config/main.php',
-        'frontend/config/main.php',
+    'advanced' => [
+        'path' => $projectPath,
+        'files' => [
+            'backend/config/main.php',
+            'common/config/main.php',
+            'console/config/main.php',
+            'frontend/config/main.php',
+        ],
     ],
-] );
+];
 
-if ( $advanced->isValid() ) {
-    $result = ( new Builder( [
-        'reader' => $advanced,
-    ] ) )->build( $projectPath . '/autocomplete.php' );
+foreach ( $variants as $params ) {
+    $reader = new Reader( $params );
+    if ( $reader->isValid() ) {
+        $result = ( new Builder( [
+            'reader' => $reader,
+        ] ) )->build( $projectPath . '/autocomplete.php' );
 
-    die( ( $result ? 'Done.' : 'Fail.' ) . PHP_EOL );
+        die( ( $result ? 'Done.' : 'Fail.' ) . PHP_EOL );
+    }
 }
 
 die( 'Project config not found' . PHP_EOL );

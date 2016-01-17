@@ -1,9 +1,11 @@
 {
     "name": "iiifx-production/yii2-autocomplete-helper",
     "type": "extension",
-    "description": "...",
+    "description": "Yii2 Autocomplete Helper",
     "keywords": [
-        "..."
+        "ide",
+        "autocomplete",
+        "helper"
     ],
     "homepage": "https://github.com/iiifx-production/yii2-autocomplete-helper",
     "license": "MIT License",
