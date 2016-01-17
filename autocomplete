@@ -6,22 +6,21 @@
  * Vitaliy IIIFX Khomenko (c) 2016
  */
 
-# Только для процесса разработки
-
 use iiifx\Yii2\Autocomplete\Builder;
 use iiifx\Yii2\Autocomplete\Reader;
 
-/** @var \Composer\Autoload\ClassLoader $loader */
+define( 'VENDOR_PATH', __DIR__ . '/../../' );
+define( 'ROOT_PATH', __DIR__ . '/../../../' );
 
-$loader = require __DIR__ . '/../../autoload.php';
-require( __DIR__ . '/../../yiisoft/yii2/Yii.php' );
+require __DIR__ . VENDOR_PATH . 'autoload.php';
+require( __DIR__ . VENDOR_PATH . 'yiisoft/yii2/Yii.php' );
 
 ( new Builder( [
     'reader' => new Reader( [
-        'path' => __DIR__,
+        'path' => ROOT_PATH,
         'files' => [
             'config/web.php',
             'config/console.php',
         ],
     ] ),
-] ) )->build();
+] ) )->build(); # ->build( ROOT_PATH . 'autocomplete.php')
