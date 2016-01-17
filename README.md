@@ -2,7 +2,9 @@
 
 Хелпер генерации автодополнения IDE для пользовательских компонентов в фреймворке Yii2.
 
-[![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis] [![Code Quality][ico-scrutinizer]][link-scrutinizer] [![Code Coverage][ico-codecoverage]][link-scrutinizer] [![Software License][ico-license]](LICENSE.md) [![Total Downloads][ico-downloads]][link-downloads]
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE.md)
+[![Total Downloads][ico-downloads]][link-downloads]
 
 Автодополнение в IDE для кастомных компонентов, добавленных в фреймворк вручную, не работает по умолчанию. Необходимо каждый раз помечать компоненты при работе самостоятельно.
 
@@ -43,9 +45,9 @@ $ composer autocomplete
 
 Хелпер сгенерирует файл autocomplete.php в корне проекта, который будет использоваться IDE.
 
-Чтобы IDE не ругался на два экземпляра класса Yii необходимо основной пометить как текстовый документ - пример(mark-as-plain-text.png).
+Чтобы IDE не ругался на два экземпляра класса Yii необходимо основной пометить как текстовый документ - [пример](mark-as-plain-text.png).
 
-В Advanced версии фреймворка перед использованием autocomplete необходимо развернуть окружение через **php init**.
+В Advanced версии фреймворка перед использованием autocomplete необходимо развернуть окружение через "php init".
 
 ## Тесты
 
