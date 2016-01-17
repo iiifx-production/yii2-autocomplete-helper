@@ -2,26 +2,48 @@
 
 namespace iiifx\Yii2\Autocomplete;
 
-class Builder extends Base\AbstractBuilder
+class Builder
 {
     /**
-     * @var Base\AbstractReader
+     * @var Reader
      */
     protected $reader;
 
     /**
-     * @param Base\AbstractReader $reader
+     * @var string
      */
-    public function __construct ( Base\AbstractReader $reader )
-    {
-        $this->reader = $reader;
-    }
+    protected $filename = 'autocomplete.php';
 
     /**
-     * @return Base\AbstractReader
+     * @param string $params
      */
-    public function getReader ()
+    public function __construct ( $params )
     {
-        return $this->reader;
+        if ( isset( $params[ 'reader' ] ) && $params[ 'reader' ] instanceof Reader ) {
+            $this->reader = $params[ 'reader' ];
+        } else {
+            throw new \InvalidArgumentException( 'Parameter "reader" is not found or type mismatch.' );
+        }
+    }
+
+    public function build ()
+    {
+        if ( ( $this->reader->isValid() && is_dir( $this->reader->getPath() ) ) ) {
+            $prepared = preg_replace_callback( '/%.*%/U', function ( $m ) {
+                if ( $m[ 0 ] === '%phpdoc%' ) {
+                    $string = '/**';
+                    foreach ( $this->reader->getComponents() as $name => $classes ) {
+                        $string .= PHP_EOL . ' * @property ' . implode( '|', $classes ) . ' $' . $name;
+                    }
+                    $string .= PHP_EOL . ' */';
+
+                    return $string;
+                }
+            }, require( __DIR__ . '/template.php' ) );
+
+            return (bool) file_put_contents( $this->reader->getPath() . DIRECTORY_SEPARATOR . $this->filename, $prepared );
+        }
+
+        return false;
     }
 }
