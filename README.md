@@ -51,7 +51,7 @@ $ composer autocomplete
 
 ## Тесты
 
-[![Build Status][ico-travis]][link-travis]
+@TODO
 
 ## Лицензия
 
