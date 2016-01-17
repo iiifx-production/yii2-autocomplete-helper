@@ -25,6 +25,9 @@
             "iiifx\\Yii2\\Autocomplete\\": "source/"
         }
     },
+    "bin": [
+        "autocomplete"
+    ],
     "scripts": {
         "test": "phpunit tests"
     }
