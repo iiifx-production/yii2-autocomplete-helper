@@ -6,21 +6,49 @@
  * Vitaliy IIIFX Khomenko (c) 2016
  */
 
+echo 'Yii2 Autocomplete Helper... ';
+
 use iiifx\Yii2\Autocomplete\Builder;
 use iiifx\Yii2\Autocomplete\Reader;
 
-define( 'VENDOR_PATH', __DIR__ . '/../../' );
-define( 'ROOT_PATH', __DIR__ . '/../../../' );
+$vendorPath = __DIR__ . '/../..';
+$projectPath = $vendorPath . '/..';
 
-require __DIR__ . VENDOR_PATH . 'autoload.php';
-require( __DIR__ . VENDOR_PATH . 'yiisoft/yii2/Yii.php' );
+require $vendorPath . '/autoload.php';
+require $vendorPath . '/yiisoft/yii2/Yii.php';
 
-( new Builder( [
-    'reader' => new Reader( [
-        'path' => ROOT_PATH,
-        'files' => [
-            'config/web.php',
-            'config/console.php',
-        ],
-    ] ),
-] ) )->build(); # ->build( ROOT_PATH . 'autocomplete.php')
+$basic = new Reader( [
+    'path' => $projectPath,
+    'files' => [
+        'config/web.php',
+        'config/console.php',
+    ],
+] );
+
+if ( $basic->isValid() ) {
+    $result = ( new Builder( [
+        'reader' => $basic,
+    ] ) )->build( $projectPath . '/autocomplete.php' );
+
+    die( ( $result ? 'Done.' : 'Fail.' ) . PHP_EOL );
+}
+
+$advanced = new Reader( [
+    'path' => $projectPath,
+    'files' => [
+        'backend/config/main.php',
+        'common/config/main.php',
+        'console/config/main.php',
+        'frontend/config/main.php',
+    ],
+] );
+
+if ( $advanced->isValid() ) {
+    $result = ( new Builder( [
+        'reader' => $advanced,
+    ] ) )->build( $projectPath . '/autocomplete.php' );
+
+    die( ( $result ? 'Done.' : 'Fail.' ) . PHP_EOL );
+}
+
+die( 'Project config not found' . PHP_EOL );

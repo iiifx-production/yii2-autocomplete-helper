@@ -26,7 +26,12 @@ class Builder
         }
     }
 
-    public function build ()
+    /**
+     * @param string $filepath
+     *
+     * @return bool
+     */
+    public function build ( $filepath )
     {
         if ( ( $this->reader->isValid() && is_dir( $this->reader->getPath() ) ) ) {
             $prepared = preg_replace_callback( '/%.*%/U', function ( $m ) {
@@ -41,7 +46,7 @@ class Builder
                 }
             }, require( __DIR__ . '/template.php' ) );
 
-            return (bool) file_put_contents( $this->reader->getPath() . DIRECTORY_SEPARATOR . $this->filename, $prepared );
+            return (bool) file_put_contents( $filepath, $prepared );
         }
 
         return false;
