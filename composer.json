@@ -1,11 +1,11 @@
 {
-    "name": "iiifx-experimental/yii2-autocomplete",
+    "name": "iiifx-production/yii2-autocomplete-helper",
     "type": "extension",
     "description": "...",
     "keywords": [
         "..."
     ],
-    "homepage": "https://github.com/iiifx-experimental/yii2-autocomplete",
+    "homepage": "https://github.com/iiifx-production/yii2-autocomplete-helper",
     "license": "MIT License",
     "authors": [
         {
@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "iiifx\\yii2\\autocomplete\\": "source/"
+            "iiifx\\Yii2\\Autocomplete\\": "source/"
         }
     },
     "scripts": {

@@ -8,4 +8,5 @@ composer.lock
 # PHP_CodeCoverage
 code-coverage
 
+config
 index.php
