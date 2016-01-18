@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author  Vitaliy IIIFX Khomenko (c) 2016
+ * @license MIT
+ *
+ * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
+ */
 
 return '<?php
 /*
