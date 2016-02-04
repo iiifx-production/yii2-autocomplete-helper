@@ -59,6 +59,7 @@ $ composer autocomplete
 
 
 
+
 [ico-version]: https://img.shields.io/packagist/v/iiifx-production/yii2-autocomplete-helper.svg
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
 [ico-downloads]: https://img.shields.io/packagist/dt/iiifx-production/yii2-autocomplete-helper.svg
