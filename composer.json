@@ -32,5 +32,10 @@
     ],
     "scripts": {
         "test": "phpunit tests"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-feature/v1.0.0": "1.0.x-dev"
+        }
     }
 }
