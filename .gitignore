@@ -1,13 +1,11 @@
-# PhpStrom
-.idea
-
 # Composer
 vendor
 composer.lock
 composer.phar
 
-# PHP_CodeCoverage
+# Code Coverage
 code-coverage
 
+# Develop
 config
-index.php
+public

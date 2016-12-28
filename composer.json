@@ -3,12 +3,15 @@
     "type": "extension",
     "description": "Yii2 Autocomplete Helper",
     "keywords": [
+        "yii2",
+        "yii",
+        "framework",
         "ide",
         "autocomplete",
         "helper"
     ],
     "homepage": "https://github.com/iiifx-production/yii2-autocomplete-helper",
-    "license": "MIT License",
+    "license": "MIT",
     "authors": [
         {
             "name": "Vitaliy IIIFX Khomenko",
@@ -16,8 +19,9 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
-        "yiisoft/yii2": "*"
+        "php": ">=5.5",
+        "yiisoft/yii2": "*",
+        "roave/security-advisories": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "@stable"
