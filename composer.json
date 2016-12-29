@@ -18,9 +18,10 @@
             "email": "iiifx@yandex.com"
         }
     ],
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.5",
-        "yiisoft/yii2": "*"
+        "yiisoft/yii2": "~2.0.6"
     },
     "require-dev": {
         "phpunit/phpunit": "@stable"
