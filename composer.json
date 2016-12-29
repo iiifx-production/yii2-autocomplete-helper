@@ -19,11 +19,11 @@
         }
     ],
     "require": {
-        "php": ">=5.5"
+        "php": ">=5.5",
+        "yiisoft/yii2": "~2.0.6"
     },
     "require-dev": {
-        "phpunit/phpunit": "@stable",
-        "yiisoft/yii2": "~2.0.6"
+        "phpunit/phpunit": "@stable"
     },
     "autoload": {
         "psr-4": {

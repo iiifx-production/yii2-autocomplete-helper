@@ -1,0 +1,7 @@
+ignore_branches:
+    - feature/*
+
+pre_composer_script: |
+    #!/bin/bash
+
+    composer global require "fxp/composer-asset-plugin:^1.2.0"
