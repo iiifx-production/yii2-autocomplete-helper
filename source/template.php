@@ -9,9 +9,11 @@
 return '<?php
 /*
  * Yii2 Autocomplete Helper
- * https://github.com/iiifx-production/yii2-autocomplete-helper
  *
- * Vitaliy IIIFX Khomenko (c) 2016
+ * @author  Vitaliy IIIFX Khomenko (c) 2016
+ * @license MIT
+ *
+ * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
  */
 
 class Yii extends \yii\BaseYii
