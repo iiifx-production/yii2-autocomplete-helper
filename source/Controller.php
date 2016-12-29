@@ -11,6 +11,7 @@ namespace iiifx\Yii2\Autocomplete;
 use Yii;
 use \Exception;
 use yii\base\InvalidCallException;
+use yii\helpers\FileHelper;
 
 class Controller extends \yii\console\Controller
 {
@@ -19,7 +20,7 @@ class Controller extends \yii\console\Controller
      */
     public function init ()
     {
-        echo "Yii2 Autocomplete Helper\n";
+        echo "Yii2 IDE Autocomplete Helper\n";
         echo "Vitaliy IIIFX Khomenko (c) 2016\n";
     }
 
@@ -54,7 +55,9 @@ class Controller extends \yii\console\Controller
                 if ( $component->result === null ) {
                     $component->result = ( $detector->detect() === 'basic' ) ? '_ide_components.php' : '../_ide_components.php';
                 }
-                $result = Yii::getAlias( '@app/' . $component->result );
+                $result = FileHelper::normalizePath(
+                    Yii::getAlias( '@app/' . $component->result )
+                );
                 if ( $builder->build( $result ) ) {
                     echo "\nSuccess: {$result}";
                 } else {
