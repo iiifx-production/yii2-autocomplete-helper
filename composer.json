@@ -35,9 +35,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "v0.3.2",
-            "dev-develop": "v1.0.x-dev",
-            "dev-feature/v1.0.0": "v1.0.x-dev"
+            "dev-develop": "v1.0.0-dev"
         }
     }
 }
