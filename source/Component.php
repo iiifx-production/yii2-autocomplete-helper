@@ -16,8 +16,18 @@ class Component extends \yii\base\Object implements BootstrapInterface
      * @var array
      */
     public $controllerMap = [
-        'ide-components' => \iiifx\Yii2\Autocomplete\Controller::class,
+        'ide-components' => \iiifx\Yii2\Autocomplete\Console\Controller::class,
     ];
+
+    /**
+     * @var string
+     */
+    public $result = '_ide_components.php';
+
+    /**
+     * @var array
+     */
+    public $config;
 
     /**
      * @inheritdoc
