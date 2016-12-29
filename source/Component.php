@@ -4,13 +4,10 @@ namespace iiifx\Yii2\Autocomplete;
 
 use yii\base\Application;
 use yii\base\BootstrapInterface;
-use yii\console\Controller;
 
-class Component extends \yii\base\Component implements BootstrapInterface
+class Component extends \yii\base\Object implements BootstrapInterface
 {
     /**
-     * Окружение, для которого разрешена работа компонента
-     *
      * @var string
      */
     public $environment = 'dev';
@@ -42,20 +39,15 @@ class Component extends \yii\base\Component implements BootstrapInterface
 
     /**
      * @param Application $app
-     *
-     * @return int
      */
-    public function updateControllerMap ( Application $app )
+    protected function updateControllerMap ( Application $app )
     {
-        $count = 0;
         if ( is_array( $this->controllerMap ) ) {
             foreach ( $this->controllerMap as $name => $controller ) {
                 if ( is_subclass_of( $controller, \yii\console\Controller::class ) ) {
                     $app->controllerMap[ $name ] = $controller;
-                    $count++;
                 }
             }
         }
-        return $count;
     }
 }

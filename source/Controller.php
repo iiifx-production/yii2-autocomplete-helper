@@ -6,6 +6,8 @@ class Controller extends \yii\console\Controller
 {
     public function actionIndex ()
     {
-        echo __METHOD__;
+        # Определить тип приложения
+        # Найти и прочитать конфигурацию
+        # Сгенерировать и сохранить
     }
 }
