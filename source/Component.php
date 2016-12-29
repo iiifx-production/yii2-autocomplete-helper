@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author  Vitaliy IIIFX Khomenko (c) 2016
+ * @license MIT
+ *
+ * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
+ */
 
 namespace iiifx\Yii2\Autocomplete;
 
@@ -16,13 +22,13 @@ class Component extends \yii\base\Object implements BootstrapInterface
      * @var array
      */
     public $controllerMap = [
-        'ide-components' => \iiifx\Yii2\Autocomplete\Console\Controller::class,
+        'ide-components' => \iiifx\Yii2\Autocomplete\Controller::class,
     ];
 
     /**
      * @var string
      */
-    public $result = '_ide_components.php';
+    public $result;
 
     /**
      * @var array

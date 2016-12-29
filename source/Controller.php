@@ -1,33 +1,42 @@
 <?php
+/**
+ * @author  Vitaliy IIIFX Khomenko (c) 2016
+ * @license MIT
+ *
+ * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
+ */
 
-namespace iiifx\Yii2\Autocomplete\Console;
+namespace iiifx\Yii2\Autocomplete;
 
-use iiifx\Yii2\Autocomplete\Builder;
-use iiifx\Yii2\Autocomplete\Component;
-use iiifx\Yii2\Autocomplete\Config;
 use Yii;
 use \Exception;
 use yii\base\InvalidCallException;
-use yii\helpers\VarDumper;
 
 class Controller extends \yii\console\Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function init ()
+    {
+        echo "Yii2 Autocomplete Helper\n";
+        echo "Vitaliy IIIFX Khomenko (c) 2016\n";
+    }
+
     /**
      * @param string $name
      */
     public function actionIndex ( $name = 'autocomplete' )
     {
-        echo "Yii2 Autocomplete Helper\n";
-        echo "Vitaliy IIIFX Khomenko (c) 2016\n";
         try {
             if ( isset( Yii::$app->{$name} ) && Yii::$app->{$name} instanceof Component ) {
                 $component = Yii::$app->{$name};
                 # Определяем тип приложения и конфигурационные файлы
+                $detector = new Detector( [
+                    'app' => Yii::$app,
+                ] );
                 if ( $component->config === null ) {
                     $component->config = [];
-                    $detector = new Detector( [
-                        'app' => Yii::$app,
-                    ] );
                     if ( $detector->detect() === false ) {
                         throw new InvalidCallException( 'Unable to determine application type' );
                     }
@@ -40,8 +49,17 @@ class Controller extends \yii\console\Controller
                 ] );
                 $builder = new Builder( [
                     'components' => $config->getComponents(),
+                    'template' => require __DIR__ . '/template.php',
                 ] );
-                $builder->build( $component->result );
+                if ( $component->result === null ) {
+                    $component->result = ( $detector->detect() === 'basic' ) ? '_ide_components.php' : '../_ide_components.php';
+                }
+                $result = Yii::getAlias( '@app/' . $component->result );
+                if ( $builder->build( $result ) ) {
+                    echo "\nSuccess: {$result}";
+                } else {
+                    echo "\nFail!";
+                }
             } else {
                 echo "\nComponent '{$name}' not found in Yii::\$app";
                 echo "\nPlease read how to configure the package";
@@ -52,9 +70,5 @@ class Controller extends \yii\console\Controller
             echo "\nPlease read how to configure the package";
             echo "\nhttps://github.com/iiifx-production/yii2-autocomplete-helper\n";
         }
-
-
-        # Найти и прочитать конфигурацию
-        # Сгенерировать и сохранить
     }
 }

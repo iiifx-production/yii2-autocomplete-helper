@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author  Vitaliy IIIFX Khomenko (c) 2016
+ * @license MIT
+ *
+ * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
+ */
 
 namespace iiifx\Yii2\Autocomplete;
 
@@ -41,7 +47,7 @@ class Config extends \yii\base\Object
                         if ( is_array( $components ) ) {
                             foreach ( $components as $name => $component ) {
                                 if ( ( $class = $this->findClass( $component ) ) !== false ) {
-                                    $this->components[ $name ] = $class;
+                                    $this->components[ $name ][ $class ] = $class;
                                 }
                             }
                         }
