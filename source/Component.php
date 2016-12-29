@@ -27,7 +27,7 @@ class Component extends \yii\base\Component implements BootstrapInterface
      */
     public function bootstrap ( $app )
     {
-        if ( $this->isActive() ) {
+        if ( $app instanceof \yii\console\Application && $this->isActive() ) {
             $this->updateControllerMap( $app );
         }
     }
@@ -50,7 +50,7 @@ class Component extends \yii\base\Component implements BootstrapInterface
         $count = 0;
         if ( is_array( $this->controllerMap ) ) {
             foreach ( $this->controllerMap as $name => $controller ) {
-                if ( $controller instanceof Controller ) {
+                if ( is_subclass_of( $controller, \yii\console\Controller::class ) ) {
                     $app->controllerMap[ $name ] = $controller;
                     $count++;
                 }
