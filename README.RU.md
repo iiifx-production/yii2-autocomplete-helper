@@ -86,7 +86,7 @@ Success: /domains/project.local/_ide_components.php
 
 При запуске генератора в консоли нужно передать правильное название компонента:
 ```bash
-php yii ide-components new-component-name
+php yii ide-components --component=new-component-name
 ```
 
 ### Изменение окружения
@@ -189,6 +189,46 @@ php yii my-custom-generator
         ],
         # ...
     ]
+```
+
+### Группы файлов конфигурации
+
+В крупных проектах иногда нужно иметь возможность генерировать разные файлы автодополнения в зависимости от этапа разработки.
+
+Вы можете сгруппировать файлы конфигурации и генерировать автодополнение лишь для определенной группы.
+```php
+    'bootstrap' => ['log', 'autocomplete'],
+    'components' => [
+        'autocomplete' => [
+            'class' => 'iiifx\Yii2\Autocomplete\Component',
+            'config' => [
+                'frontend' => [
+                    '@common/config/main.php', # <-- группа для frontend
+                    '@common/config/main-local.php',
+                    '@frontend/config/main.php',
+                    '@frontend/config/main-local.php',
+                ],
+                'backend' => [
+                    '@common/config/main.php', # <-- группа для backend
+                    '@common/config/main-local.php',
+                    '@backend/config/main.php',
+                    '@backend/config/main-local.php',
+                ],
+                'api' => [
+                    '@common/config/main.php', # <-- группа для api
+                    '@common/config/main-local.php',
+                    '@api/config/main.php',
+                    '@api/config/main-local.php',
+                ],
+            ],
+        ],
+        # ...
+    ]
+```
+
+Теперь можно сгенерировать автодополнение для нужной группы:
+```bash
+php yii ide-components --config=api
 ```
 
 ## Тесты

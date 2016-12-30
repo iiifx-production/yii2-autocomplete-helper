@@ -85,7 +85,7 @@ If you need to change the name of a **autocomplete** to another, it is quite sim
 
 When the generator run in the console you need to pass the correct component name:
 ```bash
-php yii ide-components new-component-name
+php yii ide-components --component=new-component-name
 ```
 
 ### Changing environment
@@ -188,6 +188,46 @@ For Yii2 Basic:
         ],
         # ...
     ]
+```
+
+### Configuration groups
+
+In big projects sometimes need to be able to generate different autocomplete files depending on the stage of development.
+
+You can group configuration files and generate autocompletion only for a specific group.
+```php
+    'bootstrap' => ['log', 'autocomplete'],
+    'components' => [
+        'autocomplete' => [
+            'class' => 'iiifx\Yii2\Autocomplete\Component',
+            'config' => [
+                'frontend' => [
+                    '@common/config/main.php', # <-- frontend group
+                    '@common/config/main-local.php',
+                    '@frontend/config/main.php',
+                    '@frontend/config/main-local.php',
+                ],
+                'backend' => [
+                    '@common/config/main.php', # <-- backend group
+                    '@common/config/main-local.php',
+                    '@backend/config/main.php',
+                    '@backend/config/main-local.php',
+                ],
+                'api' => [
+                    '@common/config/main.php', # <-- api group
+                    '@common/config/main-local.php',
+                    '@api/config/main.php',
+                    '@api/config/main-local.php',
+                ],
+            ],
+        ],
+        # ...
+    ]
+```
+
+Now you can generate completion for the desired group:
+```bash
+php yii ide-components --config=api
 ```
 
 ## Tests
