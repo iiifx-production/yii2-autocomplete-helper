@@ -46,7 +46,11 @@ class Controller extends \yii\console\Controller
                 } else {
                     # Файлы конфигурации указаны
                     if ( $scope === null ) {
-                        $configList = $component->config;
+                        if ( isset( $component->config[ 0 ] ) ) {
+                            $configList = $component->config;
+                        } else {
+                            throw new InvalidCallException( "Default config list not found in component config data" );
+                        }
                     } else {
                         if ( isset( $component->config[ $scope ] ) ) {
                             $configList = $component->config[ $scope ];
