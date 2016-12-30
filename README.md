@@ -132,7 +132,7 @@ Link to the controller by default: [source/Controller.php](source/Controller.php
 
 ### Changing the autocompletion file 
 
-By default, autocompletion file will be named **_ ide_components.php** and will be placed in the application root.
+By default, autocompletion file will be named **_ide_components.php** and will be placed in the application root.
 
 You can change the name and location of the file:
 ```php
