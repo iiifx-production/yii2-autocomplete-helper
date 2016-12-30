@@ -8,7 +8,7 @@
 
 return '<?php
 /*
- * Yii2 Autocomplete Helper
+ * Yii2 IDE Autocomplete Helper
  *
  * @author  Vitaliy IIIFX Khomenko (c) 2016
  * @license MIT

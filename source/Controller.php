@@ -45,7 +45,6 @@ class Controller extends \yii\console\Controller
                 }
                 # Читаем конфигурационные файлы
                 $config = new Config( [
-                    'root' => Yii::getAlias( '@app' ),
                     'files' => $component->config,
                 ] );
                 $builder = new Builder( [
@@ -53,11 +52,12 @@ class Controller extends \yii\console\Controller
                     'template' => require __DIR__ . '/template.php',
                 ] );
                 if ( $component->result === null ) {
-                    $component->result = ( $detector->detect() === 'basic' ) ? '_ide_components.php' : '../_ide_components.php';
+                    $component->result = ( $detector->detect() === 'basic' ) ?
+                        '@app/_ide_components.php' :
+                        '@console/../_ide_components.php';
                 }
-                $result = FileHelper::normalizePath(
-                    Yii::getAlias( '@app/' . $component->result )
-                );
+                $result = Yii::getAlias( $component->result );
+                $result = FileHelper::normalizePath( $result );
                 if ( $builder->build( $result ) ) {
                     echo "\nSuccess: {$result}";
                 } else {
