@@ -16,6 +16,32 @@ use yii\helpers\FileHelper;
 class Controller extends \yii\console\Controller
 {
     /**
+     * @var string
+     */
+    public $component = 'autocomplete';
+
+    /**
+     * @var string
+     */
+    public $config;
+
+    /**
+     * @inheritdoc
+     */
+    public function options ( $actionID = null )
+    {
+        return [ 'component', 'config' ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function optionAliases ()
+    {
+        return [];
+    }
+
+    /**
      * @inheritdoc
      */
     public function init ()
@@ -25,14 +51,13 @@ class Controller extends \yii\console\Controller
     }
 
     /**
-     * @param string      $name
-     * @param string|null $scope
+     * Точка входа
      */
-    public function actionIndex ( $name = 'autocomplete', $scope = null )
+    public function actionIndex ()
     {
         try {
-            if ( isset( Yii::$app->{$name} ) && Yii::$app->{$name} instanceof Component ) {
-                $component = Yii::$app->{$name};
+            if ( isset( Yii::$app->{$this->component} ) && Yii::$app->{$this->component} instanceof Component ) {
+                $component = Yii::$app->{$this->component};
                 # Определяем тип приложения и конфигурационные файлы
                 $detector = new Detector( [
                     'app' => Yii::$app,
@@ -45,17 +70,17 @@ class Controller extends \yii\console\Controller
                     $configList = $detector->getConfig();
                 } else {
                     # Файлы конфигурации указаны
-                    if ( $scope === null ) {
+                    if ( $this->config === null ) {
                         if ( isset( $component->config[ 0 ] ) ) {
                             $configList = $component->config;
                         } else {
                             throw new InvalidCallException( "Default config list not found in component config data" );
                         }
                     } else {
-                        if ( isset( $component->config[ $scope ] ) ) {
-                            $configList = $component->config[ $scope ];
+                        if ( isset( $component->config[ $this->config ] ) ) {
+                            $configList = $component->config[ $this->config ];
                         } else {
-                            throw new InvalidCallException( "Scope '{$scope}' not found in component config data" );
+                            throw new InvalidCallException( "Scope '{$this->config}' not found in component config data" );
                         }
                     }
                 }
