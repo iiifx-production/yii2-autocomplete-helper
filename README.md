@@ -9,21 +9,21 @@
 
 По умолчанию в Yii2 не работает автодополнение для пользовательских компонентов. IDE не видит добавленные компоненты и это создает неудобства в процессе работы.
 
-Это расширение позволяет автоматически генерировать файл автодополнения c PHPDoc-блоками, с помощью которого IDE будет распознавать _все компоненты_ в конфигурации приложения.
+Это расширение позволяет автоматически генерировать файл автодополнения c PHPDoc-блоками, с помощью которого IDE будет распознавать **все компоненты** в конфигурации приложения.
 
 ## Установка
 
 Используя Composer:
 
 ``` bash
-$ composer require "iiifx-production/yii2-autocomplete-helper:v1.*"
+composer require "iiifx-production/yii2-autocomplete-helper:v1.*"
 ```
 
 ## Настройка
 
 После установки нужно разово настроить компонент для работы.
 
-Для Yii2 Basic, в файле config/console.php:
+Для Yii2 Basic, в **@app/config/console.php**:
 ```php
     'bootstrap' => ['log', 'autocomplete'],
     'components' => [
@@ -34,7 +34,7 @@ $ composer require "iiifx-production/yii2-autocomplete-helper:v1.*"
     ]
 ```
 
-Для Yii2 Advanced, в файле console/config/main.php:
+Для Yii2 Advanced, в **@console/config/main.php**:
 ```php
     'bootstrap' => ['log', 'autocomplete'],
     'components' => [
@@ -47,23 +47,23 @@ $ composer require "iiifx-production/yii2-autocomplete-helper:v1.*"
 
 ## Использование
 
-В любой момент в консоли выполнить:
-``` bash
-$ php yii ide-components
+Для генерации автодополнения в консоли выполнить:
+```bash
+php yii ide-components
 ```
 
-Детектор автоматически распознает тип приложения, считает все конфигурационные файлы и сгенерирует для них файл автодополнения, который будет сохранен в корне приложения.
+Детектор генератора автоматически распознает тип приложения, прочитает все конфигурационные файлы и сгенерирует для них файл автодополнения, который будет сохранен в корне приложения.
 ```bash
-Yii2 Autocomplete Helper
+Yii2 IDE Autocomplete Helper
 Vitaliy IIIFX Khomenko (c) 2016
 
 Success: /domains/project.local/_ide_components.php
 ```
 
-Чтобы IDE не ругался на два экземпляра класса Yii необходимо файл основного класса Yii пометить как текстовый документ - [пример](images/mark-as-plain-text.png).
-Файл основного класса расположен по пути: vendor/yiisoft/yii2/Yii.php
+**Важно:** Чтобы IDE не ругался на два экземпляра класса Yii необходимо файл основного класса Yii пометить как текстовый документ - [пример](images/mark-as-plain-text.png).
+Файл основного класса расположен по пути: **@vendor/yiisoft/yii2/Yii.php**
 
-## Особая настройка
+## Расширенная настройка
 
 Иногда структура приложения отличается от стандартной и нужно изменить поведение компонента.
 
@@ -73,9 +73,9 @@ Success: /domains/project.local/_ide_components.php
 
 Если вам нужно изменить название с 'autocomplete' на другое, то это делается достаточно просто:
 ```php
-    'bootstrap' => ['log', 'new_name'], # <-- новое название
+    'bootstrap' => ['log', 'new-component-name'], # <-- новое название
     'components' => [
-        'new_name' => [ # <-- новое название
+        'new-component-name' => [ # <-- новое название
             'class' => 'iiifx\Yii2\Autocomplete\Component',
         ],
         # ...
@@ -83,19 +83,21 @@ Success: /domains/project.local/_ide_components.php
 ```
 
 При запуске генератора в консоли нужно передать правильное название компонента:
-``` bash
-$ php yii ide-components new_name
+```bash
+php yii ide-components new-component-name
 ```
 
 ### Изменение окружения
 
-По умолчанию запуск генератора возможен только для DEV-окружения.
+По умолчанию запуск генератора возможен только для YII_ENV = "dev" окружения.
+
+Вы можете изменить окружение на любое другое:
 ```php
     'bootstrap' => ['log', 'autocomplete'],
     'components' => [
         'autocomplete' => [
             'class' => 'iiifx\Yii2\Autocomplete\Component',
-            'environment' => 'rc', # <-- ваше окружение
+            'environment' => 'local', # <-- ваше окружение
         ],
         # ...
     ]
@@ -103,47 +105,53 @@ $ php yii ide-components new_name
 
 ### Изменение контроллера генератора
 
-Вы можете заменить контроллер генератора на свою собственную реализацию или изменить его:
+По умолчанию генератор использует свой консольный контроллер для создания автодополнения.
+
+Вы можете заменить контроллер по умолчанию, расширить его или даже добавить свои собственные реализации:
 ```php
     'bootstrap' => ['log', 'autocomplete'],
     'components' => [
         'autocomplete' => [
             'class' => 'iiifx\Yii2\Autocomplete\Component',
             'controllerMap' => [
-                'ide-components' => 'iiifx\Yii2\Autocomplete\Controller', # <-- контроллер генератора
-                'my-generator' => 'path\to\your\Controller', # <-- ваш особый контроллер
+                'ide-components' => 'iiifx\Yii2\Autocomplete\Controller', # <-- контроллер генератора по умолчанию
+                'my-custom-generator' => 'path\to\your\custom\Controller', # <-- ваш особый контроллер
             ],
         ],
         # ...
     ]
 ```
 
-Так можно разместить несколько генераторов и запускать их в нужный момент:
-``` bash
-$ php yii my-generator
+Теперь можно запустить ваш особый контроллер:
+```bash
+$ php yii my-custom-generator
 ```
 
-### Изменение названия файла автодополнения
+Ссылка на контроллер по умолчанию: [source/Controller.php](source/Controller.php).
 
-По умолчанию файл автодополнения будет назван "_ide_components.php", но это можно изменить:
+### Изменение файла автодополнения
+
+По умолчанию сгенерированный файл автодополнения будет назван **_ide_components.php** и будет размещен в корне приложения.
+ 
+Вы можете изменить название и расположение файла:
 ```php
     'bootstrap' => ['log', 'autocomplete'],
     'components' => [
         'autocomplete' => [
             'class' => 'iiifx\Yii2\Autocomplete\Component',
-            'result' => '_new_name.php' # <-- другое название
+            'result' => '@app/new-file-name.php' # <-- другое название и путь
         ],
         # ...
     ]
 ```
 
-Важно понимать, что название файла всегда используется относительно пути @app в фреймворке, потому для Yii2 Advanced приложения файл должен начинаться с "..". Пример: "../_new_name.php".
+Важно понимать, что путь к файлу автодополнения используется относительно пути **@app** в фреймворке, потому для Yii2 Advanced путь должен содержать "..". Пример: **@console/../new-file-name.php**.
 
 ### Особые файлы конфигурации
 
 Иногда нужно указать вручную файлы конфигурации приложения, с которых необходимо сгенерировать автодополнение.
 
-В этом случае детектор не будет искать конфигурацию, генератор сразу использует указанный список.
+В этом случае детектор генератора не будет искать конфигурацию, генератор сразу использует указанный список.
 
 Для Yii2 Advanced:
 ```php
@@ -152,17 +160,19 @@ $ php yii my-generator
         'autocomplete' => [
             'class' => 'iiifx\Yii2\Autocomplete\Component',
             'config' => [
-                '../common/config/main.php', # <-- список файлов конфигурации
-                '../console/config/main.php',
-                '../backend/config/main.php',
-                '../frontend/config/main.php',
+                '@common/config/main.php', # <-- список файлов конфигурации
+                '@common/config/main-local.php',
+                '@console/config/main.php',
+                '@console/config/main-local.php',
+                '@backend/config/main.php',
+                '@backend/config/main-local.php',
+                '@frontend/config/main.php',
+                '@frontend/config/main-local.php',
             ],
         ],
         # ...
     ]
 ```
-
-Обратите внимание, что для Yii2 Advanced все файлы должны начинаться с "..".
 
 Для Yii2 Basic:
 ```php
@@ -171,8 +181,8 @@ $ php yii my-generator
         'autocomplete' => [
             'class' => 'iiifx\Yii2\Autocomplete\Component',
             'config' => [
-                'config/console.php', # <-- список файлов конфигурации
-                'config/web.php',
+                '@app/config/console.php', # <-- список файлов конфигурации
+                '@app/config/web.php',
             ],
         ],
         # ...
