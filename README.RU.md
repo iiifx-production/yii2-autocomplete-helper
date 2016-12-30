@@ -126,7 +126,7 @@ php yii ide-components new-component-name
 
 Теперь можно запустить ваш особый контроллер:
 ```bash
-$ php yii my-custom-generator
+php yii my-custom-generator
 ```
 
 Ссылка на контроллер по умолчанию: [source/Controller.php](source/Controller.php).

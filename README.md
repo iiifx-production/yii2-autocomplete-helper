@@ -125,7 +125,7 @@ You can replace the default controller, extend it, or add your own implementatio
 
 Now you can run your controller:
 ```bash
-$ php yii my-custom-generator
+php yii my-custom-generator
 ```
 
 Link to the controller by default: [source/Controller.php](source/Controller.php).
