@@ -32,14 +32,18 @@ class Detector extends Object
      */
     public $configs = [
         'basic' => [
-            'config/console.php',
-            'config/web.php',
+            '@app/config/console.php',
+            '@app/config/web.php',
         ],
         'advanced' => [
-            '../common/config/main.php',
-            '../console/config/main.php',
-            '../backend/config/main.php',
-            '../frontend/config/main.php',
+            '@common/config/main.php',
+            '@common/config/main-local.php',
+            '@console/config/main.php',
+            '@console/config/main-local.php',
+            '@backend/config/main.php',
+            '@backend/config/main-local.php',
+            '@frontend/config/main.php',
+            '@frontend/config/main-local.php',
         ],
     ];
 

@@ -20,7 +20,7 @@
     ],
     "require": {
         "php": ">=5.5",
-        "yiisoft/yii2": "~2.0.6"
+        "yiisoft/yii2": "~2.0.8"
     },
     "require-dev": {
         "phpunit/phpunit": "@stable"
@@ -35,7 +35,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-develop": "v1.0.x-dev"
+            "dev-develop": "v1.x-dev"
         }
     }
 }

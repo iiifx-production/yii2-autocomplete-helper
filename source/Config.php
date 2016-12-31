@@ -10,14 +10,11 @@ namespace iiifx\Yii2\Autocomplete;
 
 use Closure;
 use Exception;
+use Yii;
+use yii\helpers\FileHelper;
 
 class Config extends \yii\base\Object
 {
-    /**
-     * @var string
-     */
-    public $root;
-
     /**
      * @var mixed[]
      */
@@ -26,28 +23,29 @@ class Config extends \yii\base\Object
     /**
      * @var mixed[]
      */
-    protected $config;
+    protected $_config;
 
     /**
      * @var mixed[]
      */
-    protected $components;
+    protected $_components;
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getComponents ()
     {
-        if ( $this->components === null ) {
-            $this->components = [];
+        if ( $this->_components === null ) {
+            $this->_components = [];
             if ( $config = $this->readConfig() ) {
                 foreach ( $this->files as $current ) {
                     if ( isset( $config[ $current ][ 'components' ] ) ) {
+                        /** @var mixed[] $components */
                         $components = $config[ $current ][ 'components' ];
                         if ( is_array( $components ) ) {
                             foreach ( $components as $name => $component ) {
                                 if ( ( $class = $this->findClass( $component ) ) !== false ) {
-                                    $this->components[ $name ][ $class ] = $class;
+                                    $this->_components[ $name ][ $class ] = $class;
                                 }
                             }
                         }
@@ -55,30 +53,30 @@ class Config extends \yii\base\Object
                 }
             }
         }
-        return $this->components;
+        return $this->_components;
     }
 
     /**
-     * @return mixed[]|false
+     * @return mixed[]
      */
     protected function readConfig ()
     {
-        if ( $this->config === null ) {
-            if ( is_dir( $this->root ) ) {
-                foreach ( $this->files as $file ) {
-                    $path = $this->root . DIRECTORY_SEPARATOR . $file;
-                    if ( is_file( $path ) ) {
-                        try {
-                            /** @noinspection PhpIncludeInspection */
-                            $this->config[ $file ] = require $path;
-                        } catch ( Exception $exception ) {
-                            # Игнорируем
-                        }
+        if ( $this->_config === null ) {
+            $this->_config = [];
+            foreach ( $this->files as $file ) {
+                $path = Yii::getAlias( $file );
+                $path = FileHelper::normalizePath( $path );
+                if ( is_file( $path ) ) {
+                    try {
+                        /** @noinspection PhpIncludeInspection */
+                        $this->_config[ $file ] = require $path;
+                    } catch ( Exception $exception ) {
+                        # Игнорируем
                     }
                 }
             }
         }
-        return $this->config;
+        return $this->_config;
     }
 
     /**

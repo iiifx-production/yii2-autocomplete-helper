@@ -21,11 +21,11 @@ class Builder extends \yii\base\Object
     public $components = [];
 
     /**
-     * @param string $file
+     * @param string|false $file
      *
-     * @return bool
+     * @return bool|string
      */
-    public function build ( $file )
+    public function build ( $file = null )
     {
         $prepared = preg_replace_callback( '/%.*%/U', function ( $m ) {
             if ( $m[ 0 ] === '%phpdoc%' ) {
@@ -38,6 +38,9 @@ class Builder extends \yii\base\Object
             }
             return $m[ 0 ];
         }, $this->template );
+        if ( $file === null ) {
+            return $prepared;
+        }
         return (bool) file_put_contents( $file, $prepared );
     }
 }

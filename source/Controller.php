@@ -16,6 +16,32 @@ use yii\helpers\FileHelper;
 class Controller extends \yii\console\Controller
 {
     /**
+     * @var string
+     */
+    public $component = 'autocomplete';
+
+    /**
+     * @var string
+     */
+    public $config;
+
+    /**
+     * @inheritdoc
+     */
+    public function options ( $actionID = null )
+    {
+        return [ 'component', 'config' ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function optionAliases ()
+    {
+        return [];
+    }
+
+    /**
      * @inheritdoc
      */
     public function init ()
@@ -25,39 +51,54 @@ class Controller extends \yii\console\Controller
     }
 
     /**
-     * @param string $name
+     * Точка входа
      */
-    public function actionIndex ( $name = 'autocomplete' )
+    public function actionIndex ()
     {
         try {
-            if ( isset( Yii::$app->{$name} ) && Yii::$app->{$name} instanceof Component ) {
-                $component = Yii::$app->{$name};
+            if ( isset( Yii::$app->{$this->component} ) && Yii::$app->{$this->component} instanceof Component ) {
+                $component = Yii::$app->{$this->component};
                 # Определяем тип приложения и конфигурационные файлы
                 $detector = new Detector( [
                     'app' => Yii::$app,
                 ] );
                 if ( $component->config === null ) {
-                    $component->config = [];
+                    # В компоненте не указаны файлы конфигурации
                     if ( $detector->detect() === false ) {
                         throw new InvalidCallException( 'Unable to determine application type' );
                     }
-                    $component->config = $detector->getConfig();
+                    $configList = $detector->getConfig();
+                } else {
+                    # Файлы конфигурации указаны
+                    if ( $this->config === null ) {
+                        if ( isset( $component->config[ 0 ] ) ) {
+                            $configList = $component->config;
+                        } else {
+                            throw new InvalidCallException( "Default config list not found in component config data" );
+                        }
+                    } else {
+                        if ( isset( $component->config[ $this->config ] ) ) {
+                            $configList = $component->config[ $this->config ];
+                        } else {
+                            throw new InvalidCallException( "Scope '{$this->config}' not found in component config data" );
+                        }
+                    }
                 }
                 # Читаем конфигурационные файлы
                 $config = new Config( [
-                    'root' => Yii::getAlias( '@app' ),
-                    'files' => $component->config,
+                    'files' => $configList,
                 ] );
                 $builder = new Builder( [
                     'components' => $config->getComponents(),
                     'template' => require __DIR__ . '/template.php',
                 ] );
                 if ( $component->result === null ) {
-                    $component->result = ( $detector->detect() === 'basic' ) ? '_ide_components.php' : '../_ide_components.php';
+                    $component->result = ( $detector->detect() === 'basic' ) ?
+                        '@app/_ide_components.php' :
+                        '@console/../_ide_components.php';
                 }
-                $result = FileHelper::normalizePath(
-                    Yii::getAlias( '@app/' . $component->result )
-                );
+                $result = Yii::getAlias( $component->result );
+                $result = FileHelper::normalizePath( $result );
                 if ( $builder->build( $result ) ) {
                     echo "\nSuccess: {$result}";
                 } else {
@@ -65,13 +106,13 @@ class Controller extends \yii\console\Controller
                 }
             } else {
                 echo "\nComponent '{$name}' not found in Yii::\$app";
-                echo "\nPlease read how to configure the package";
-                echo "\nhttps://github.com/iiifx-production/yii2-autocomplete-helper\n";
+                echo "\nPlease read package documentation: ";
+                echo "https://github.com/iiifx-production/yii2-autocomplete-helper\n";
             }
         } catch ( Exception $exception ) {
             echo "\n" . $exception->getMessage();
-            echo "\nPlease read how to configure the package";
-            echo "\nhttps://github.com/iiifx-production/yii2-autocomplete-helper\n";
+            echo "\nPlease read package documentation: ";
+            echo "https://github.com/iiifx-production/yii2-autocomplete-helper\n";
         }
     }
 }

@@ -1,189 +1,240 @@
 # Yii2 IDE Autocomplete Helper
 
-Генератор автодополнения для пользовательских компонентов в Yii2.
+Autocompletion generator for custom components in Yii2.
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b/big.png)](https://insight.sensiolabs.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b)
 
 [![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis]
 [![Total Downloads][ico-downloads]][link-downloads] 
 
-По умолчанию в Yii2 не работает автодополнение для пользовательских компонентов. IDE не видит добавленные компоненты и это создает неудобства в процессе работы.
+[English documentation] [[Документация на русском](README.RU.md)] 
 
-Это расширение позволяет автоматически генерировать файл автодополнения c PHPDoc-блоками, с помощью которого IDE будет распознавать _все компоненты_ в конфигурации приложения.
+By default in Yii2 not working autocompletion for custom components. IDE sees no added components and this causes inconvenience in operation.
 
-## Установка
+This extension allows you to automatically generate a file with the autocomplete PHPDoc blocks with which the IDE will recognize **all of the components** in the application configuration.
 
-Используя Composer:
+## Installation
 
-``` bash
-$ composer require "iiifx-production/yii2-autocomplete-helper:v1.*"
-```
+Using Composer:
 
-## Настройка
-
-После установки нужно разово настроить компонент для работы.
-
-Для Yii2 Basic, в файле config/console.php:
-```php
-    'bootstrap' => ['log', 'autocomplete'],
-    'components' => [
-        'autocomplete' => [
-            'class' => 'iiifx\Yii2\Autocomplete\Component',
-        ],
-        # ...
-    ]
-```
-
-Для Yii2 Advanced, в файле console/config/main.php:
-```php
-    'bootstrap' => ['log', 'autocomplete'],
-    'components' => [
-        'autocomplete' => [
-            'class' => 'iiifx\Yii2\Autocomplete\Component',
-        ],
-        # ...
-    ]
-```
-
-## Использование
-
-В любой момент в консоли выполнить:
-``` bash
-$ php yii ide-components
-```
-
-Детектор автоматически распознает тип приложения, считает все конфигурационные файлы и сгенерирует для них файл автодополнения, который будет сохранен в корне приложения.
 ```bash
-Yii2 Autocomplete Helper
+composer require "iiifx-production/yii2-autocomplete-helper:v1.*"
+```
+
+## Configuration
+
+After installation, you need to one-time set up component to work.
+
+For Yii2 Basic, in **@app/config/console.php**:
+```php
+    'bootstrap' => ['log', 'autocomplete'],
+    'components' => [
+        'autocomplete' => [
+            'class' => 'iiifx\Yii2\Autocomplete\Component',
+        ],
+        # ...
+    ]
+```
+
+For Yii2 Advanced, in **@console/config/main.php**:
+```php
+    'bootstrap' => ['log', 'autocomplete'],
+    'components' => [
+        'autocomplete' => [
+            'class' => 'iiifx\Yii2\Autocomplete\Component',
+        ],
+        # ...
+    ]
+```
+
+## Using
+
+To generate autocompletion in the console:
+```bash
+php yii ide-components
+```
+
+Generator automatically detects the type of application, read all configuration files and generate the autocomplete file to the application root.
+```bash
+Yii2 IDE Autocomplete Helper
 Vitaliy IIIFX Khomenko (c) 2016
 
 Success: /domains/project.local/_ide_components.php
 ```
+**Important:** For IDE did not swear on the two copies of the Yii class must be main  Yii class file marked as a text document - [example](images/mark-as-plain-text.png).
+The main class is located on the way: **@vendor/yiisoft/yii2/Yii.php**
 
-Чтобы IDE не ругался на два экземпляра класса Yii необходимо файл основного класса Yii пометить как текстовый документ - [пример](images/mark-as-plain-text.png).
-Файл основного класса расположен по пути: vendor/yiisoft/yii2/Yii.php
+## Advanced customization
 
-## Особая настройка
+Sometimes the structure of the application differs from the standard and the need to change the generator behavior.
 
-Иногда структура приложения отличается от стандартной и нужно изменить поведение компонента.
+The following are examples of possible configuration options.
 
-Ниже приведены примеры возможных вариантов конфигурации.
+### Changing the name of the component
 
-### Изменение названия компонента
-
-Если вам нужно изменить название с 'autocomplete' на другое, то это делается достаточно просто:
+If you need to change the name of a **autocomplete** to another, it is quite simple:
 ```php
-    'bootstrap' => ['log', 'new_name'], # <-- новое название
+    'bootstrap' => ['log', 'new-component-name'], # <-- new component name
     'components' => [
-        'new_name' => [ # <-- новое название
+        'new-component-name' => [ # <-- new component name
             'class' => 'iiifx\Yii2\Autocomplete\Component',
         ],
         # ...
     ]
 ```
 
-При запуске генератора в консоли нужно передать правильное название компонента:
-``` bash
-$ php yii ide-components new_name
+When the generator run in the console you need to pass the correct component name:
+```bash
+php yii ide-components --component=new-component-name
 ```
 
-### Изменение окружения
+### Changing environment
 
-По умолчанию запуск генератора возможен только для DEV-окружения.
+By default, a generator start is only possible for YII_ENV = "dev" environment.
+
+You can change the environment:
 ```php
     'bootstrap' => ['log', 'autocomplete'],
     'components' => [
         'autocomplete' => [
             'class' => 'iiifx\Yii2\Autocomplete\Component',
-            'environment' => 'rc', # <-- ваше окружение
+            'environment' => 'local', # <-- environment
         ],
         # ...
     ]
 ```
 
-### Изменение контроллера генератора
+### Changing the generator controller
 
-Вы можете заменить контроллер генератора на свою собственную реализацию или изменить его:
+By default, the generator uses a console controller to create autocompletion.
+
+You can replace the default controller, extend it, or add your own implementation:
 ```php
     'bootstrap' => ['log', 'autocomplete'],
     'components' => [
         'autocomplete' => [
             'class' => 'iiifx\Yii2\Autocomplete\Component',
             'controllerMap' => [
-                'ide-components' => 'iiifx\Yii2\Autocomplete\Controller', # <-- контроллер генератора
-                'my-generator' => 'path\to\your\Controller', # <-- ваш особый контроллер
+                'ide-components' => 'iiifx\Yii2\Autocomplete\Controller', # <-- default controller
+                'my-custom-generator' => 'path\to\your\custom\Controller', # <-- your controller
             ],
         ],
         # ...
     ]
 ```
 
-Так можно разместить несколько генераторов и запускать их в нужный момент:
-``` bash
-$ php yii my-generator
+Now you can run your controller:
+```bash
+php yii my-custom-generator
 ```
 
-### Изменение названия файла автодополнения
+Link to the controller by default: [source/Controller.php](source/Controller.php).
 
-По умолчанию файл автодополнения будет назван "_ide_components.php", но это можно изменить:
+### Changing the autocompletion file 
+
+By default, autocompletion file will be named **_ide_components.php** and will be placed in the application root.
+
+You can change the name and location of the file:
 ```php
     'bootstrap' => ['log', 'autocomplete'],
     'components' => [
         'autocomplete' => [
             'class' => 'iiifx\Yii2\Autocomplete\Component',
-            'result' => '_new_name.php' # <-- другое название
+            'result' => '@app/new-file-name.php' # <-- name and path
         ],
         # ...
     ]
 ```
 
-Важно понимать, что название файла всегда используется относительно пути @app в фреймворке, потому для Yii2 Advanced приложения файл должен начинаться с "..". Пример: "../_new_name.php".
+It is important to understand that the path to the file used **@app** in the framework, because for Yii2 Advanced path must contain "..". Example: **@console/../new-file-name.php**.
 
-### Особые файлы конфигурации
+### Special configuration files
 
-Иногда нужно указать вручную файлы конфигурации приложения, с которых необходимо сгенерировать автодополнение.
+Sometimes you need to manually specify the application configuration files from which you want to generate autocompletion.
 
-В этом случае детектор не будет искать конфигурацию, генератор сразу использует указанный список.
+In this case, the generator will not seek configuration, the generator immediately uses this list.
 
-Для Yii2 Advanced:
-```php
-    'bootstrap' => ['log', 'autocomplete'],
-    'components' => [
-        'autocomplete' => [
-            'class' => 'iiifx\Yii2\Autocomplete\Component',
-            'config' => [
-                '../common/config/main.php', # <-- список файлов конфигурации
-                '../console/config/main.php',
-                '../backend/config/main.php',
-                '../frontend/config/main.php',
-            ],
-        ],
-        # ...
-    ]
-```
-
-Обратите внимание, что для Yii2 Advanced все файлы должны начинаться с "..".
-
-Для Yii2 Basic:
+For Yii2 Advanced:
 ```php
     'bootstrap' => ['log', 'autocomplete'],
     'components' => [
         'autocomplete' => [
             'class' => 'iiifx\Yii2\Autocomplete\Component',
             'config' => [
-                'config/console.php', # <-- список файлов конфигурации
-                'config/web.php',
+                '@common/config/main.php', # <-- config list
+                '@common/config/main-local.php',
+                '@console/config/main.php',
+                '@console/config/main-local.php',
+                '@backend/config/main.php',
+                '@backend/config/main-local.php',
+                '@frontend/config/main.php',
+                '@frontend/config/main-local.php',
             ],
         ],
         # ...
     ]
 ```
 
-## Тесты
+For Yii2 Basic:
+```php
+    'bootstrap' => ['log', 'autocomplete'],
+    'components' => [
+        'autocomplete' => [
+            'class' => 'iiifx\Yii2\Autocomplete\Component',
+            'config' => [
+                '@app/config/console.php', # <-- config list
+                '@app/config/web.php',
+            ],
+        ],
+        # ...
+    ]
+```
+
+### Configuration groups
+
+In big projects sometimes need to be able to generate different autocomplete files depending on the stage of development.
+
+You can group configuration files and generate autocompletion only for a specific group.
+```php
+    'bootstrap' => ['log', 'autocomplete'],
+    'components' => [
+        'autocomplete' => [
+            'class' => 'iiifx\Yii2\Autocomplete\Component',
+            'config' => [
+                'frontend' => [
+                    '@common/config/main.php', # <-- frontend group
+                    '@common/config/main-local.php',
+                    '@frontend/config/main.php',
+                    '@frontend/config/main-local.php',
+                ],
+                'backend' => [
+                    '@common/config/main.php', # <-- backend group
+                    '@common/config/main-local.php',
+                    '@backend/config/main.php',
+                    '@backend/config/main-local.php',
+                ],
+                'api' => [
+                    '@common/config/main.php', # <-- api group
+                    '@common/config/main-local.php',
+                    '@api/config/main.php',
+                    '@api/config/main-local.php',
+                ],
+            ],
+        ],
+        # ...
+    ]
+```
+
+Now you can generate completion for the desired group:
+```bash
+php yii ide-components --config=api
+```
+
+## Tests
 
 [![Build Status][ico-travis]][link-travis] [![Code Coverage][ico-codecoverage]][link-scrutinizer]
 
-## Лицензия
+## License
 
 [![Software License][ico-license]](LICENSE.md)
 
