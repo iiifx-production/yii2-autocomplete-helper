@@ -18,7 +18,7 @@
 Используя Composer:
 
 ```bash
-composer require "iiifx-production/yii2-autocomplete-helper:v1.*"
+composer require "iiifx-production/yii2-autocomplete-helper:^1.1"
 ```
 
 ## Настройка
