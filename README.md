@@ -18,7 +18,7 @@ This extension allows you to automatically generate a file with the autocomplete
 Using Composer:
 
 ```bash
-composer require "iiifx-production/yii2-autocomplete-helper:v1.*"
+composer require "iiifx-production/yii2-autocomplete-helper:^1.1"
 ```
 
 ## Configuration
@@ -61,7 +61,7 @@ Vitaliy IIIFX Khomenko (c) 2016
 
 Success: /domains/project.local/_ide_components.php
 ```
-**Important:** For IDE did not swear on the two copies of the Yii class must be main  Yii class file marked as a text document - [example](images/mark-as-plain-text.png).
+**Important:** For IDE did not swear on the two copies of the Yii class must be main Yii class file marked as a text document - [example](images/mark-as-plain-text.png).
 The main class is located on the way: **@vendor/yiisoft/yii2/Yii.php**
 
 ## Advanced customization
@@ -146,7 +146,7 @@ You can change the name and location of the file:
     ]
 ```
 
-It is important to understand that the path to the file used **@app** in the framework, because for Yii2 Advanced path must contain "..". Example: **@console/../new-file-name.php**.
+The file path must be relative to aliases framework. Example: **@common/../new-file-name.php**.
 
 ### Special configuration files
 
@@ -216,8 +216,8 @@ You can group configuration files and generate autocompletion only for a specifi
                 'api' => [
                     '@common/config/main.php', # <-- api group
                     '@common/config/main-local.php',
-                    '@api/config/main.php',
-                    '@api/config/main-local.php',
+                    '@common/../api/config/main.php',
+                    '@common/../api/config/main-local.php',
                 ],
             ],
         ],
@@ -225,7 +225,7 @@ You can group configuration files and generate autocompletion only for a specifi
     ]
 ```
 
-Now you can generate completion for the desired group:
+Now you can generate autocompletion for the desired group:
 ```bash
 php yii ide-components --config=api
 ```

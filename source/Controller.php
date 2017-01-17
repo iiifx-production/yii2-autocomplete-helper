@@ -11,14 +11,25 @@ namespace iiifx\Yii2\Autocomplete;
 use Yii;
 use \Exception;
 use yii\base\InvalidCallException;
+use yii\base\InvalidConfigException;
 use yii\helpers\FileHelper;
 
+/**
+ * Class Controller
+ *
+ * @package iiifx\Yii2\Autocomplete
+ */
 class Controller extends \yii\console\Controller
 {
     /**
      * @var string
      */
     public $component = 'autocomplete';
+
+    /**
+     * @var Detector
+     */
+    protected $detector;
 
     /**
      * @var string
@@ -46,8 +57,9 @@ class Controller extends \yii\console\Controller
      */
     public function init ()
     {
-        echo "Yii2 IDE Autocomplete Helper\n";
-        echo "Vitaliy IIIFX Khomenko (c) 2016\n";
+        echo
+            'Yii2 IDE Autocomplete Helper' . PHP_EOL .
+            'Vitaliy IIIFX Khomenko, 2016' . PHP_EOL;
     }
 
     /**
@@ -56,63 +68,88 @@ class Controller extends \yii\console\Controller
     public function actionIndex ()
     {
         try {
-            if ( isset( Yii::$app->{$this->component} ) && Yii::$app->{$this->component} instanceof Component ) {
-                $component = Yii::$app->{$this->component};
-                # Определяем тип приложения и конфигурационные файлы
-                $detector = new Detector( [
-                    'app' => Yii::$app,
-                ] );
-                if ( $component->config === null ) {
-                    # В компоненте не указаны файлы конфигурации
-                    if ( $detector->detect() === false ) {
-                        throw new InvalidCallException( 'Unable to determine application type' );
-                    }
-                    $configList = $detector->getConfig();
-                } else {
-                    # Файлы конфигурации указаны
-                    if ( $this->config === null ) {
-                        if ( isset( $component->config[ 0 ] ) ) {
-                            $configList = $component->config;
-                        } else {
-                            throw new InvalidCallException( "Default config list not found in component config data" );
-                        }
-                    } else {
-                        if ( isset( $component->config[ $this->config ] ) ) {
-                            $configList = $component->config[ $this->config ];
-                        } else {
-                            throw new InvalidCallException( "Scope '{$this->config}' not found in component config data" );
-                        }
-                    }
-                }
-                # Читаем конфигурационные файлы
-                $config = new Config( [
-                    'files' => $configList,
-                ] );
-                $builder = new Builder( [
-                    'components' => $config->getComponents(),
-                    'template' => require __DIR__ . '/template.php',
-                ] );
-                if ( $component->result === null ) {
-                    $component->result = ( $detector->detect() === 'basic' ) ?
-                        '@app/_ide_components.php' :
-                        '@console/../_ide_components.php';
-                }
-                $result = Yii::getAlias( $component->result );
-                $result = FileHelper::normalizePath( $result );
-                if ( $builder->build( $result ) ) {
-                    echo "\nSuccess: {$result}";
-                } else {
-                    echo "\nFail!";
-                }
+            $component = $this->getComponent();
+            $configList = $this->getConfig( $component );
+            $config = new Config( [
+                'files' => $configList,
+            ] );
+            $builder = new Builder( [
+                'components' => $config->getComponents(),
+                'template' => require __DIR__ . '/template.php',
+            ] );
+            if ( $component->result === null ) {
+                $component->result = ( $this->getDetector()->detect() === 'basic' ) ?
+                    '@app/_ide_components.php' :
+                    '@console/../_ide_components.php';
+            }
+            $result = Yii::getAlias( $component->result );
+            $result = FileHelper::normalizePath( $result );
+            if ( $builder->build( $result ) ) {
+                echo PHP_EOL . 'Success: ' . $result;
             } else {
-                echo "\nComponent '{$name}' not found in Yii::\$app";
-                echo "\nPlease read package documentation: ";
-                echo "https://github.com/iiifx-production/yii2-autocomplete-helper\n";
+                echo PHP_EOL . 'Fail!';
             }
         } catch ( Exception $exception ) {
-            echo "\n" . $exception->getMessage();
-            echo "\nPlease read package documentation: ";
-            echo "https://github.com/iiifx-production/yii2-autocomplete-helper\n";
+            echo
+                PHP_EOL . $exception->getMessage() .
+                PHP_EOL . 'Please read the package documentation: https://github.com/iiifx-production/yii2-autocomplete-helper' .
+                PHP_EOL;
         }
+    }
+
+    /**
+     * @return Component
+     *
+     * @throws InvalidConfigException
+     */
+    protected function getComponent ()
+    {
+        if ( isset( Yii::$app->{$this->component} ) && Yii::$app->{$this->component} instanceof Component ) {
+            return Yii::$app->{$this->component};
+        }
+        throw new InvalidConfigException( "Component '{$this->component}' not found in Yii::\$app" );
+    }
+
+    /**
+     * @return Detector
+     */
+    protected function getDetector ()
+    {
+        if ( $this->detector === null ) {
+            $this->detector = new Detector( [
+                'app' => Yii::$app,
+            ] );
+        }
+        return $this->detector;
+    }
+
+    /**
+     * @param Component $component
+     *
+     * @return array
+     */
+    protected function getConfig ( Component $component )
+    {
+        if ( $component->config === null ) {
+            if ( $this->getDetector()->detect() === false ) {
+                throw new InvalidCallException( 'Unable to determine application type' );
+            }
+            $configList = $this->getDetector()->getConfig();
+        } else {
+            if ( $this->config === null ) {
+                if ( isset( $component->config[ 0 ] ) ) {
+                    $configList = $component->config;
+                } else {
+                    throw new InvalidCallException( 'Default config list not found in component config data' );
+                }
+            } else {
+                if ( isset( $component->config[ $this->config ] ) ) {
+                    $configList = $component->config[ $this->config ];
+                } else {
+                    throw new InvalidCallException( "Scope '{$this->config}' not found in component config data" );
+                }
+            }
+        }
+        return $configList;
     }
 }
