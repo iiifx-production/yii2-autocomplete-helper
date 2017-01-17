@@ -147,7 +147,7 @@ php yii my-custom-generator
     ]
 ```
 
-Важно понимать, что путь к файлу автодополнения используется относительно пути **@app** в фреймворке, потому для Yii2 Advanced путь должен содержать "..". Пример: **@console/../new-file-name.php**.
+Путь к файлу должен быть указан относительно алиасов фреймворка. Пример: **@common/../new-file-name.php**.
 
 ### Особые файлы конфигурации
 
@@ -217,8 +217,8 @@ php yii my-custom-generator
                 'api' => [
                     '@common/config/main.php', # <-- группа для api
                     '@common/config/main-local.php',
-                    '@api/config/main.php',
-                    '@api/config/main-local.php',
+                    '@common/../api/config/main.php',
+                    '@common/../api/config/main-local.php',
                 ],
             ],
         ],
