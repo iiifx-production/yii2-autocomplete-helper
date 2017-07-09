@@ -1,6 +1,6 @@
 <?php
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2016
+ * @author  Vitaliy IIIFX Khomenko (c) 2017
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
@@ -8,7 +8,9 @@
 
 namespace iiifx\Yii2\Autocomplete;
 
-class Builder extends \yii\base\Object
+use yii\base\Object;
+
+class Builder extends Object
 {
     /**
      * @var string

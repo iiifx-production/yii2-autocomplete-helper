@@ -1,6 +1,6 @@
 <?php
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2016
+ * @author  Vitaliy IIIFX Khomenko (c) 2017
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
@@ -8,8 +8,8 @@
 
 namespace iiifx\Yii2\Autocomplete;
 
+use Exception;
 use Yii;
-use \Exception;
 use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;
 use yii\helpers\FileHelper;
@@ -27,21 +27,24 @@ class Controller extends \yii\console\Controller
     public $component = 'autocomplete';
 
     /**
-     * @var Detector
-     */
-    protected $detector;
-
-    /**
      * @var string
      */
     public $config;
+
+    /**
+     * @var Detector
+     */
+    protected $detector;
 
     /**
      * @inheritdoc
      */
     public function options ( $actionID = null )
     {
-        return [ 'component', 'config' ];
+        return [
+            'component',
+            'config',
+        ];
     }
 
     /**
@@ -52,14 +55,9 @@ class Controller extends \yii\console\Controller
         return [];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function init ()
+    public function echoInfo ()
     {
-        echo
-            'Yii2 IDE Autocomplete Helper' . PHP_EOL .
-            'Vitaliy IIIFX Khomenko, 2016' . PHP_EOL;
+        echo 'Yii2 IDE Autocomplete Helper' . PHP_EOL . 'Vitaliy IIIFX Khomenko, 2017' . PHP_EOL;
     }
 
     /**
@@ -67,6 +65,7 @@ class Controller extends \yii\console\Controller
      */
     public function actionIndex ()
     {
+        $this->echoInfo();
         try {
             $component = $this->getComponent();
             $configList = $this->getConfig( $component );
@@ -90,8 +89,7 @@ class Controller extends \yii\console\Controller
                 echo PHP_EOL . 'Fail!';
             }
         } catch ( Exception $exception ) {
-            echo
-                PHP_EOL . $exception->getMessage() .
+            echo PHP_EOL . $exception->getMessage() .
                 PHP_EOL . 'Please read the package documentation: https://github.com/iiifx-production/yii2-autocomplete-helper' .
                 PHP_EOL;
         }
@@ -127,6 +125,8 @@ class Controller extends \yii\console\Controller
      * @param Component $component
      *
      * @return array
+     *
+     * @throws InvalidCallException
      */
     protected function getConfig ( Component $component )
     {

@@ -1,6 +1,6 @@
 <?php
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2016
+ * @author  Vitaliy IIIFX Khomenko (c) 2017
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
@@ -11,9 +11,10 @@ namespace iiifx\Yii2\Autocomplete;
 use Closure;
 use Exception;
 use Yii;
+use yii\base\Object;
 use yii\helpers\FileHelper;
 
-class Config extends \yii\base\Object
+class Config extends Object
 {
     /**
      * @var mixed[]
@@ -32,6 +33,8 @@ class Config extends \yii\base\Object
 
     /**
      * @return mixed[]
+     *
+     * @throws \yii\base\InvalidParamException
      */
     public function getComponents ()
     {
@@ -58,6 +61,8 @@ class Config extends \yii\base\Object
 
     /**
      * @return mixed[]
+     *
+     * @throws \yii\base\InvalidParamException
      */
     protected function readConfig ()
     {
@@ -89,11 +94,14 @@ class Config extends \yii\base\Object
         try {
             if ( $section instanceof Closure ) {
                 return get_class( $section() );
-            } elseif ( is_object( $section ) ) {
+            }
+            if ( is_object( $section ) ) {
                 return get_class( $section );
-            } elseif ( is_string( $section ) ) {
+            }
+            if ( is_string( $section ) ) {
                 return $section;
-            } elseif ( is_array( $section ) && isset( $section[ 'class' ] ) ) {
+            }
+            if ( is_array( $section ) && isset( $section[ 'class' ] ) ) {
                 return $section[ 'class' ];
             }
         } catch ( Exception $exception ) {

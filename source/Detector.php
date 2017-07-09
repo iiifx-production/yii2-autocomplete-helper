@@ -1,6 +1,6 @@
 <?php
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2016
+ * @author  Vitaliy IIIFX Khomenko (c) 2017
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
@@ -65,9 +65,7 @@ class Detector extends Object
     public function getConfig ()
     {
         if ( $type = $this->detect() ) {
-            if ( isset( $this->configs[ $type ] ) ) {
-                return $this->configs[ $type ];
-            }
+            return isset( $this->configs[ $type ] ) ? $this->configs[ $type ] : [];
         }
         return [];
     }
@@ -77,7 +75,7 @@ class Detector extends Object
      */
     protected function getApplication ()
     {
-        if ( !$this->app instanceof Application ) {
+        if ( ! $this->app instanceof Application ) {
             $this->app = Yii::$app;
         }
         return $this->app;
