@@ -18,7 +18,7 @@ This extension allows you to automatically generate a file with the autocomplete
 Using Composer:
 
 ```bash
-composer require "iiifx-production/yii2-autocomplete-helper:^1.1"
+composer require "iiifx-production/yii2-autocomplete-helper:^1.2"
 ```
 
 ## Configuration
