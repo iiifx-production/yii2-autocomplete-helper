@@ -23,7 +23,7 @@
         "yiisoft/yii2": "~2.0.8"
     },
     "require-dev": {
-        "phpunit/phpunit": "@stable"
+        "phpunit/phpunit": "^5"
     },
     "autoload": {
         "psr-4": {
