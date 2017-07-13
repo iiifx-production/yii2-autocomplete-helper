@@ -61,7 +61,7 @@ class Controller extends \yii\console\Controller
     }
 
     /**
-     * Точка входа
+     * Generate IDE auto-completion code.
      */
     public function actionIndex ()
     {
