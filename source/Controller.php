@@ -55,17 +55,11 @@ class Controller extends \yii\console\Controller
         return [];
     }
 
-    public function echoInfo ()
-    {
-        echo 'Yii2 IDE Autocomplete Helper' . PHP_EOL . 'Vitaliy IIIFX Khomenko, 2017' . PHP_EOL;
-    }
-
     /**
      * Generate IDE auto-completion code.
      */
     public function actionIndex ()
     {
-        $this->echoInfo();
         try {
             $component = $this->getComponent();
             $configList = $this->getConfig( $component );
