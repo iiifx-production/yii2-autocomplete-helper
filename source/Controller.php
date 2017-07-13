@@ -15,7 +15,7 @@ use yii\base\InvalidConfigException;
 use yii\helpers\FileHelper;
 
 /**
- * Class Controller
+ * Automatically generate IDE auto-completion file.
  *
  * @package iiifx\Yii2\Autocomplete
  */
