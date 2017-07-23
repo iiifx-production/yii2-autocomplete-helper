@@ -1,6 +1,6 @@
 {
     "name": "iiifx-production/yii2-autocomplete-helper",
-    "type": "extension",
+    "type": "yii2-extension",
     "description": "Yii2 Autocomplete Helper",
     "keywords": [
         "yii2",
