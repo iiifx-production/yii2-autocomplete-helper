@@ -8,6 +8,7 @@
         "framework",
         "ide",
         "autocomplete",
+        "auto-completion",
         "helper"
     ],
     "homepage": "https://github.com/iiifx-production/yii2-autocomplete-helper",
@@ -19,7 +20,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5",
+        "php": "^5.5|^7",
         "yiisoft/yii2": "~2.0.8"
     },
     "require-dev": {

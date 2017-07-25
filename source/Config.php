@@ -76,7 +76,7 @@ class Config extends Object
                         /** @noinspection PhpIncludeInspection */
                         $this->_config[ $file ] = require $path;
                     } catch ( Exception $exception ) {
-                        # Игнорируем
+                        # Ignore
                     }
                 }
             }
@@ -105,7 +105,7 @@ class Config extends Object
                 return $section[ 'class' ];
             }
         } catch ( Exception $exception ) {
-            # Игнорируем
+            # Ignore
         }
         return false;
     }

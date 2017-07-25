@@ -4,8 +4,9 @@
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b/big.png)](https://insight.sensiolabs.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b)
 
-[![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis]
-[![Total Downloads][ico-downloads]][link-downloads]
+[![Latest Version on Packagist][ico-version]][link-packagist] 
+[![Total Downloads][ico-downloads]][link-downloads] 
+[![Software License][ico-license]](LICENSE.md)
 
 [[English documentation](README.md)] [Документация на русском] 
 
@@ -18,7 +19,7 @@
 Используя Composer:
 
 ```bash
-composer require "iiifx-production/yii2-autocomplete-helper:^1.2"
+composer require "iiifx-production/yii2-autocomplete-helper:^1.3"
 ```
 
 ## Настройка
@@ -56,10 +57,10 @@ php yii ide-components
 
 Детектор генератора автоматически распознает тип приложения, прочитает все конфигурационные файлы и сгенерирует для них файл автодополнения, который будет сохранен в корне приложения.
 ```bash
-Yii2 IDE Autocomplete Helper
-Vitaliy IIIFX Khomenko (c) 2016
+Yii2 IDE auto-completion helper
+Vitaliy IIIFX Khomenko, 2017
 
-Success: /domains/project.local/_ide_components.php
+Success: /home/iiifx/Projects/myProject/_ide_components.php
 ```
 
 **Важно:** Чтобы IDE не ругался на два экземпляра класса Yii необходимо файл основного класса Yii пометить как текстовый документ - [пример](images/mark-as-plain-text.png).
@@ -231,13 +232,6 @@ php yii my-custom-generator
 php yii ide-components --config=api
 ```
 
-## Тесты
-
-[![Build Status][ico-travis]][link-travis] [![Code Coverage][ico-codecoverage]][link-scrutinizer]
-
-## Лицензия
-
-[![Software License][ico-license]](LICENSE.md)
 
 
 [ico-version]: https://img.shields.io/packagist/v/iiifx-production/yii2-autocomplete-helper.svg

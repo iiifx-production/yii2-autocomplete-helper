@@ -12,10 +12,11 @@ use Exception;
 use Yii;
 use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;
+use yii\helpers\Console;
 use yii\helpers\FileHelper;
 
 /**
- * Class Controller
+ * Automatically generate IDE auto-completion file
  *
  * @package iiifx\Yii2\Autocomplete
  */
@@ -55,17 +56,21 @@ class Controller extends \yii\console\Controller
         return [];
     }
 
-    public function echoInfo ()
+    /**
+     * Shows description
+     */
+    public function showDescription ()
     {
-        echo 'Yii2 IDE Autocomplete Helper' . PHP_EOL . 'Vitaliy IIIFX Khomenko, 2017' . PHP_EOL;
+        $this->stdout( "Yii2 IDE auto-completion helper\n" );
+        $this->stdout( "Vitaliy IIIFX Khomenko, 2017\n\n" );
     }
 
     /**
-     * Точка входа
+     * Generate IDE auto-completion file
      */
     public function actionIndex ()
     {
-        $this->echoInfo();
+        $this->showDescription();
         try {
             $component = $this->getComponent();
             $configList = $this->getConfig( $component );
@@ -84,14 +89,14 @@ class Controller extends \yii\console\Controller
             $result = Yii::getAlias( $component->result );
             $result = FileHelper::normalizePath( $result );
             if ( $builder->build( $result ) ) {
-                echo PHP_EOL . 'Success: ' . $result;
+                $this->stdout( "Success: {$result}\n", Console::FG_GREEN );
             } else {
-                echo PHP_EOL . 'Fail!';
+                $this->stdout( "Fail!\n", Console::FG_RED );
             }
         } catch ( Exception $exception ) {
-            echo PHP_EOL . $exception->getMessage() .
-                PHP_EOL . 'Please read the package documentation: https://github.com/iiifx-production/yii2-autocomplete-helper' .
-                PHP_EOL;
+            $this->stdout( $exception->getMessage() . "\n\n", Console::FG_RED );
+            $this->stdout( "Please read the package documentation: https://github.com/iiifx-production/yii2-autocomplete-helper\n" );
+            $this->stdout( "or create new issue: https://github.com/iiifx-production/yii2-autocomplete-helper/issues/new\n" );
         }
     }
 
@@ -105,7 +110,7 @@ class Controller extends \yii\console\Controller
         if ( isset( Yii::$app->{$this->component} ) && Yii::$app->{$this->component} instanceof Component ) {
             return Yii::$app->{$this->component};
         }
-        throw new InvalidConfigException( "Component '{$this->component}' not found in Yii::\$app" );
+        throw new InvalidConfigException( sprintf( 'Component "%s" not found in Yii::$app', $this->component ) );
     }
 
     /**
@@ -146,7 +151,7 @@ class Controller extends \yii\console\Controller
                 if ( isset( $component->config[ $this->config ] ) ) {
                     $configList = $component->config[ $this->config ];
                 } else {
-                    throw new InvalidCallException( "Scope '{$this->config}' not found in component config data" );
+                    throw new InvalidCallException( sprintf( 'Scope "%s" not found in component config data', $this->config ) );
                 }
             }
         }

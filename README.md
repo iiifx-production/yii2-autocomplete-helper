@@ -4,8 +4,9 @@ Autocompletion generator for custom components in Yii2.
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b/big.png)](https://insight.sensiolabs.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b)
 
-[![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis]
+[![Latest Version on Packagist][ico-version]][link-packagist] 
 [![Total Downloads][ico-downloads]][link-downloads] 
+[![Software License][ico-license]](LICENSE.md)
 
 [English documentation] [[Документация на русском](README.RU.md)] 
 
@@ -18,7 +19,7 @@ This extension allows you to automatically generate a file with the autocomplete
 Using Composer:
 
 ```bash
-composer require "iiifx-production/yii2-autocomplete-helper:^1.2"
+composer require "iiifx-production/yii2-autocomplete-helper:^1.3"
 ```
 
 ## Configuration
@@ -56,10 +57,10 @@ php yii ide-components
 
 Generator automatically detects the type of application, read all configuration files and generate the autocomplete file to the application root.
 ```bash
-Yii2 IDE Autocomplete Helper
-Vitaliy IIIFX Khomenko (c) 2016
+Yii2 IDE auto-completion helper
+Vitaliy IIIFX Khomenko, 2017
 
-Success: /domains/project.local/_ide_components.php
+Success: /home/iiifx/Projects/myProject/_ide_components.php
 ```
 **Important:** For IDE did not swear on the two copies of the Yii class must be main Yii class file marked as a text document - [example](images/mark-as-plain-text.png).
 The main class is located on the way: **@vendor/yiisoft/yii2/Yii.php**
@@ -229,14 +230,6 @@ Now you can generate autocompletion for the desired group:
 ```bash
 php yii ide-components --config=api
 ```
-
-## Tests
-
-[![Build Status][ico-travis]][link-travis] [![Code Coverage][ico-codecoverage]][link-scrutinizer]
-
-## License
-
-[![Software License][ico-license]](LICENSE.md)
 
 
 [ico-version]: https://img.shields.io/packagist/v/iiifx-production/yii2-autocomplete-helper.svg
