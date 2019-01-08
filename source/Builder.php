@@ -8,9 +8,9 @@
 
 namespace iiifx\Yii2\Autocomplete;
 
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class Builder extends Object
+class Builder extends BaseObject
 {
     /**
      * @var string
