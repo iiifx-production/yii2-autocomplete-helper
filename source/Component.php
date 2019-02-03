@@ -10,9 +10,9 @@ namespace iiifx\Yii2\Autocomplete;
 
 use yii\base\Application;
 use yii\base\BootstrapInterface;
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class Component extends Object implements BootstrapInterface
+class Component extends BaseObject implements BootstrapInterface
 {
     /**
      * @var string

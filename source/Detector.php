@@ -10,9 +10,9 @@ namespace iiifx\Yii2\Autocomplete;
 
 use Yii;
 use yii\base\Application;
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class Detector extends Object
+class Detector extends BaseObject
 {
     /**
      * @var Application

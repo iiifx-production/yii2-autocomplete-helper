@@ -11,10 +11,10 @@ namespace iiifx\Yii2\Autocomplete;
 use Closure;
 use Exception;
 use Yii;
-use yii\base\Object;
+use yii\base\BaseObject;
 use yii\helpers\FileHelper;
 
-class Config extends Object
+class Config extends BaseObject
 {
     /**
      * @var mixed[]
