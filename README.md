@@ -5,7 +5,8 @@ Autocompletion generator for custom components in Yii2.
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b/big.png)](https://insight.sensiolabs.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b)
 
 [![Latest Version on Packagist][ico-version]][link-packagist] 
-[![Total Downloads][ico-downloads]][link-downloads] 
+[![Total Downloads][ico-downloads]][link-downloads]
+[![Code Coverage](https://scrutinizer-ci.com/g/iiifx-production/yii2-autocomplete-helper/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/iiifx-production/yii2-autocomplete-helper/?branch=master) 
 [![Software License][ico-license]](LICENSE.md)
 
 [English documentation] [[Документация на русском](README.RU.md)] 
@@ -19,7 +20,7 @@ This extension allows you to automatically generate a file with the autocomplete
 Using Composer:
 
 ```bash
-composer require "iiifx-production/yii2-autocomplete-helper:^1.3"
+composer require "iiifx-production/yii2-autocomplete-helper"
 ```
 
 ## Configuration
@@ -58,7 +59,7 @@ php yii ide-components
 Generator automatically detects the type of application, read all configuration files and generate the autocomplete file to the application root.
 ```bash
 Yii2 IDE auto-completion helper
-Vitaliy IIIFX Khomenko, 2017
+Vitaliy IIIFX Khomenko, 2019
 
 Success: /home/iiifx/Projects/myProject/_ide_components.php
 ```

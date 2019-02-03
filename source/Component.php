@@ -1,6 +1,6 @@
 <?php
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2017
+ * @author  Vitaliy IIIFX Khomenko (c) 2019
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
