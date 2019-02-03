@@ -1,6 +1,6 @@
 <?php
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2017
+ * @author  Vitaliy IIIFX Khomenko (c) 2019
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
@@ -8,9 +8,9 @@
 
 namespace iiifx\Yii2\Autocomplete;
 
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class Builder extends Object
+class Builder extends BaseObject
 {
     /**
      * @var string
@@ -27,22 +27,22 @@ class Builder extends Object
      *
      * @return bool|string
      */
-    public function build ( $file = null )
+    public function build($file = null)
     {
-        $prepared = preg_replace_callback( '/%.*%/U', function ( $m ) {
-            if ( $m[ 0 ] === '%phpdoc%' ) {
+        $prepared = preg_replace_callback('/%.*%/U', function ($m) {
+            if ($m[0] === '%phpdoc%') {
                 $string = '/**';
-                foreach ( $this->components as $name => $classes ) {
-                    $string .= PHP_EOL . ' * @property ' . implode( '|', $classes ) . ' $' . $name;
+                foreach ($this->components as $name => $classes) {
+                    $string .= PHP_EOL . ' * @property ' . implode('|', $classes) . ' $' . $name;
                 }
                 $string .= PHP_EOL . ' */';
                 return $string;
             }
-            return $m[ 0 ];
-        }, $this->template );
-        if ( $file === null ) {
+            return $m[0];
+        }, $this->template);
+        if ($file === null) {
             return $prepared;
         }
-        return (bool) file_put_contents( $file, $prepared );
+        return (bool)file_put_contents($file, $prepared);
     }
 }
