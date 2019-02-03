@@ -8,3 +8,6 @@ code-coverage
 
 # Develop
 public
+
+# PhpStorm
+.idea
