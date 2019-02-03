@@ -50,11 +50,11 @@ class Detector extends BaseObject
     /**
      * @return string|false
      */
-    public function detect ()
+    public function detect()
     {
         $application = $this->getApplication();
-        if ( isset( $this->ids[ $application->id ] ) ) {
-            return $this->ids[ $application->id ];
+        if (isset($this->ids[$application->id])) {
+            return $this->ids[$application->id];
         }
         return false;
     }
@@ -62,10 +62,10 @@ class Detector extends BaseObject
     /**
      * @return array
      */
-    public function getConfig ()
+    public function getConfig()
     {
-        if ( $type = $this->detect() ) {
-            return isset( $this->configs[ $type ] ) ? $this->configs[ $type ] : [];
+        if ($type = $this->detect()) {
+            return isset($this->configs[$type]) ? $this->configs[$type] : [];
         }
         return [];
     }
@@ -73,9 +73,9 @@ class Detector extends BaseObject
     /**
      * @return Application
      */
-    protected function getApplication ()
+    protected function getApplication()
     {
-        if ( ! $this->app instanceof Application ) {
+        if (!$this->app instanceof Application) {
             $this->app = Yii::$app;
         }
         return $this->app;

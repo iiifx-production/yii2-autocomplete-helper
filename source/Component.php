@@ -9,8 +9,8 @@
 namespace iiifx\Yii2\Autocomplete;
 
 use yii\base\Application;
-use yii\base\BootstrapInterface;
 use yii\base\BaseObject;
+use yii\base\BootstrapInterface;
 
 class Component extends BaseObject implements BootstrapInterface
 {
@@ -39,30 +39,30 @@ class Component extends BaseObject implements BootstrapInterface
     /**
      * @inheritdoc
      */
-    public function bootstrap ( $app )
+    public function bootstrap($app)
     {
-        if ( $app instanceof \yii\console\Application && $this->isActive() ) {
-            $this->updateControllerMap( $app );
+        if ($app instanceof \yii\console\Application && $this->isActive()) {
+            $this->updateControllerMap($app);
         }
     }
 
     /**
      * @return bool
      */
-    public function isActive ()
+    public function isActive()
     {
-        return defined( 'YII_ENV' ) && YII_ENV === $this->environment;
+        return defined('YII_ENV') && YII_ENV === $this->environment;
     }
 
     /**
      * @param Application $app
      */
-    protected function updateControllerMap ( Application $app )
+    protected function updateControllerMap(Application $app)
     {
-        if ( is_array( $this->controllerMap ) ) {
-            foreach ( $this->controllerMap as $name => $controller ) {
-                if ( is_subclass_of( $controller, \yii\console\Controller::class ) ) {
-                    $app->controllerMap[ $name ] = $controller;
+        if (is_array($this->controllerMap)) {
+            foreach ($this->controllerMap as $name => $controller) {
+                if (is_subclass_of($controller, \yii\console\Controller::class)) {
+                    $app->controllerMap[$name] = $controller;
                 }
             }
         }

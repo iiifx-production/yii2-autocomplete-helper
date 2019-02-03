@@ -36,19 +36,19 @@ class Config extends BaseObject
      *
      * @throws \yii\base\InvalidParamException
      */
-    public function getComponents ()
+    public function getComponents()
     {
-        if ( $this->_components === null ) {
+        if ($this->_components === null) {
             $this->_components = [];
-            if ( $config = $this->readConfig() ) {
-                foreach ( $this->files as $current ) {
-                    if ( isset( $config[ $current ][ 'components' ] ) ) {
+            if ($config = $this->readConfig()) {
+                foreach ($this->files as $current) {
+                    if (isset($config[$current]['components'])) {
                         /** @var mixed[] $components */
-                        $components = $config[ $current ][ 'components' ];
-                        if ( is_array( $components ) ) {
-                            foreach ( $components as $name => $component ) {
-                                if ( ( $class = $this->findClass( $component ) ) !== false ) {
-                                    $this->_components[ $name ][ $class ] = $class;
+                        $components = $config[$current]['components'];
+                        if (is_array($components)) {
+                            foreach ($components as $name => $component) {
+                                if (($class = $this->findClass($component)) !== false) {
+                                    $this->_components[$name][$class] = $class;
                                 }
                             }
                         }
@@ -64,18 +64,18 @@ class Config extends BaseObject
      *
      * @throws \yii\base\InvalidParamException
      */
-    protected function readConfig ()
+    protected function readConfig()
     {
-        if ( $this->_config === null ) {
+        if ($this->_config === null) {
             $this->_config = [];
-            foreach ( $this->files as $file ) {
-                $path = Yii::getAlias( $file );
-                $path = FileHelper::normalizePath( $path );
-                if ( is_file( $path ) ) {
+            foreach ($this->files as $file) {
+                $path = Yii::getAlias($file);
+                $path = FileHelper::normalizePath($path);
+                if (is_file($path)) {
                     try {
                         /** @noinspection PhpIncludeInspection */
-                        $this->_config[ $file ] = require $path;
-                    } catch ( Exception $exception ) {
+                        $this->_config[$file] = require $path;
+                    } catch (Exception $exception) {
                         # Ignore
                     }
                 }
@@ -89,22 +89,22 @@ class Config extends BaseObject
      *
      * @return string|false
      */
-    protected function findClass ( $section )
+    protected function findClass($section)
     {
         try {
-            if ( $section instanceof Closure ) {
-                return get_class( $section() );
+            if ($section instanceof Closure) {
+                return get_class($section());
             }
-            if ( is_object( $section ) ) {
-                return get_class( $section );
+            if (is_object($section)) {
+                return get_class($section);
             }
-            if ( is_string( $section ) ) {
+            if (is_string($section)) {
                 return $section;
             }
-            if ( is_array( $section ) && isset( $section[ 'class' ] ) ) {
-                return $section[ 'class' ];
+            if (is_array($section) && isset($section['class'])) {
+                return $section['class'];
             }
-        } catch ( Exception $exception ) {
+        } catch (Exception $exception) {
             # Ignore
         }
         return false;
