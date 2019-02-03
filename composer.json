@@ -34,5 +34,11 @@
     },
     "scripts": {
         "test": "phpunit tests"
+    },
+    "config": {
+        "fxp-asset": {
+            "npm-asset-library": "vendor/npm-asset",
+            "bower-asset-library": "vendor/bower-asset"
+        }
     }
 }
