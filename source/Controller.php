@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2019
+ * @author  Vitaliy IIIFX Khomenko (c) 2021
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
@@ -22,25 +22,14 @@ use yii\helpers\FileHelper;
  */
 class Controller extends \yii\console\Controller
 {
-    /**
-     * @var string
-     */
-    public $component = 'autocomplete';
-
-    /**
-     * @var string
-     */
-    public $config;
-
-    /**
-     * @var Detector
-     */
-    protected $detector;
+    public string $component = 'autocomplete';
+    public string $config;
+    protected Detector $detector;
 
     /**
      * @inheritdoc
      */
-    public function options($actionID = null)
+    public function options($actionID = null): array
     {
         return [
             'component',
@@ -51,43 +40,46 @@ class Controller extends \yii\console\Controller
     /**
      * @inheritdoc
      */
-    public function optionAliases()
+    public function optionAliases(): array
     {
         return [];
     }
 
-    /**
-     * Shows description
-     */
-    public function showDescription()
+    public function showDescription(): void
     {
         $this->stdout("Yii2 IDE auto-completion helper\n");
-        $this->stdout("Vitaliy IIIFX Khomenko, 2019\n\n");
+        $this->stdout("Vitaliy IIIFX Khomenko, 2021\n\n");
     }
 
     /**
      * Generate IDE auto-completion file
      */
-    public function actionIndex()
+    public function actionIndex(): void
     {
         $this->showDescription();
+
         try {
             $component = $this->getComponent();
             $configList = $this->getConfig($component);
+
             $config = new Config([
                 'files' => $configList,
             ]);
+
             $builder = new Builder([
                 'components' => $config->getComponents(),
                 'template' => require __DIR__ . '/template.php',
             ]);
-            if ($component->result === null) {
-                $component->result = ($this->getDetector()->detect() === 'basic') ?
-                    '@app/_ide_components.php' :
-                    '@console/../_ide_components.php';
+
+            if (null === $component->result) {
+                $component->result = ($this->getDetector()->detect() === 'basic')
+                    ? '@app/_ide_components.php'
+                    : '@console/../_ide_components.php';
             }
+
             $result = Yii::getAlias($component->result);
             $result = FileHelper::normalizePath($result);
+
             if ($builder->build($result)) {
                 $this->stdout("Success: {$result}\n", Console::FG_GREEN);
             } else {
@@ -105,24 +97,23 @@ class Controller extends \yii\console\Controller
      *
      * @throws InvalidConfigException
      */
-    protected function getComponent()
+    protected function getComponent(): Component
     {
         if (isset(Yii::$app->{$this->component}) && Yii::$app->{$this->component} instanceof Component) {
             return Yii::$app->{$this->component};
         }
+
         throw new InvalidConfigException(sprintf('Component "%s" not found in Yii::$app', $this->component));
     }
 
-    /**
-     * @return Detector
-     */
-    protected function getDetector()
+    protected function getDetector(): Detector
     {
         if ($this->detector === null) {
             $this->detector = new Detector([
                 'app' => Yii::$app,
             ]);
         }
+
         return $this->detector;
     }
 
@@ -133,15 +124,16 @@ class Controller extends \yii\console\Controller
      *
      * @throws InvalidCallException
      */
-    protected function getConfig(Component $component)
+    protected function getConfig(Component $component): array
     {
-        if ($component->config === null) {
+        if (null === $component->config) {
             if ($this->getDetector()->detect() === false) {
                 throw new InvalidCallException('Unable to determine application type');
             }
+
             $configList = $this->getDetector()->getConfig();
         } else {
-            if ($this->config === null) {
+            if (null === $this->config) {
                 if (isset($component->config[0])) {
                     $configList = $component->config;
                 } else {
@@ -155,6 +147,7 @@ class Controller extends \yii\console\Controller
                 }
             }
         }
+
         return $configList;
     }
 }
