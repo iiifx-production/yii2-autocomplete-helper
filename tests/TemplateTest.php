@@ -1,10 +1,12 @@
 <?php
 
-class TemplateTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class TemplateTest extends TestCase
 {
     public $template;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->template = require __DIR__ . '/../source/template.php';
     }

@@ -3,8 +3,9 @@
 require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 
 use iiifx\Yii2\Autocomplete\Builder;
+use PHPUnit\Framework\TestCase;
 
-class BuilderTest extends PHPUnit_Framework_TestCase
+class BuilderTest extends TestCase
 {
     /**
      * @return array
