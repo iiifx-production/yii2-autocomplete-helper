@@ -3,6 +3,9 @@ vendor
 composer.lock
 composer.phar
 
+# PhpUnit
+phpunit.phar
+
 # Code Coverage
 code-coverage
 

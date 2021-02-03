@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2019
+ * @author  Vitaliy IIIFX Khomenko (c) 2021
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
@@ -14,23 +14,12 @@ use yii\base\BaseObject;
 
 class Detector extends BaseObject
 {
-    /**
-     * @var Application
-     */
-    public $app;
-
-    /**
-     * @var array
-     */
-    public $ids = [
+    public Application $app;
+    public array $ids = [
         'basic-console' => 'basic',
         'app-console' => 'advanced',
     ];
-
-    /**
-     * @var array
-     */
-    public $configs = [
+    public array $configs = [
         'basic' => [
             '@app/config/console.php',
             '@app/config/web.php',
@@ -47,37 +36,32 @@ class Detector extends BaseObject
         ],
     ];
 
-    /**
-     * @return string|false
-     */
-    public function detect()
+    public function detect(): bool|string
     {
         $application = $this->getApplication();
+
         if (isset($this->ids[$application->id])) {
             return $this->ids[$application->id];
         }
+
         return false;
     }
 
-    /**
-     * @return array
-     */
-    public function getConfig()
+    public function getConfig(): array
     {
         if ($type = $this->detect()) {
             return isset($this->configs[$type]) ? $this->configs[$type] : [];
         }
+
         return [];
     }
 
-    /**
-     * @return Application
-     */
-    protected function getApplication()
+    protected function getApplication(): Application
     {
         if (!$this->app instanceof Application) {
             $this->app = Yii::$app;
         }
+
         return $this->app;
     }
 }

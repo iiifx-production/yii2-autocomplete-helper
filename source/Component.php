@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2019
+ * @author  Vitaliy IIIFX Khomenko (c) 2021
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
@@ -8,33 +8,19 @@
 
 namespace iiifx\Yii2\Autocomplete;
 
+use JetBrains\PhpStorm\Pure;
 use yii\base\Application;
 use yii\base\BaseObject;
 use yii\base\BootstrapInterface;
 
 class Component extends BaseObject implements BootstrapInterface
 {
-    /**
-     * @var string
-     */
-    public $environment = 'dev';
-
-    /**
-     * @var array
-     */
-    public $controllerMap = [
+    public string $environment = 'dev';
+    public array $controllerMap = [
         'ide-components' => Controller::class,
     ];
-
-    /**
-     * @var string
-     */
-    public $result;
-
-    /**
-     * @var array
-     */
-    public $config;
+    public string $result;
+    public array $config = [];
 
     /**
      * @inheritdoc
@@ -46,18 +32,13 @@ class Component extends BaseObject implements BootstrapInterface
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function isActive()
+    #[Pure]
+    public function isActive(): bool
     {
         return defined('YII_ENV') && YII_ENV === $this->environment;
     }
 
-    /**
-     * @param Application $app
-     */
-    protected function updateControllerMap(Application $app)
+    protected function updateControllerMap(Application $app): void
     {
         if (is_array($this->controllerMap)) {
             foreach ($this->controllerMap as $name => $controller) {
