@@ -8,7 +8,6 @@
 
 namespace iiifx\Yii2\Autocomplete;
 
-use JetBrains\PhpStorm\Pure;
 use yii\base\Application;
 use yii\base\BaseObject;
 use yii\base\BootstrapInterface;
@@ -19,7 +18,7 @@ class Component extends BaseObject implements BootstrapInterface
     public array $controllerMap = [
         'ide-components' => Controller::class,
     ];
-    public string $result;
+    public ?string $result = null;
     public array $config = [];
 
     /**
@@ -32,7 +31,6 @@ class Component extends BaseObject implements BootstrapInterface
         }
     }
 
-    #[Pure]
     public function isActive(): bool
     {
         return defined('YII_ENV') && YII_ENV === $this->environment;

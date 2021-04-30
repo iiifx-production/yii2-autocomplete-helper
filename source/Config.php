@@ -17,15 +17,12 @@ use yii\helpers\FileHelper;
 class Config extends BaseObject
 {
     public array $files = [];
-    protected array $_config;
-    protected array $_components;
+    protected ?array $_config = null;
+    protected ?array $_components = null;
 
-    /**
-     * @return mixed[]
-     */
     public function getComponents(): array
     {
-        if ($this->_components === null) {
+        if (null === $this->_components) {
             $this->_components = [];
 
             if ($config = $this->readConfig()) {
@@ -49,12 +46,9 @@ class Config extends BaseObject
         return $this->_components;
     }
 
-    /**
-     * @return mixed[]
-     */
     protected function readConfig(): array
     {
-        if ($this->_config === null) {
+        if (null === $this->_config) {
             $this->_config = [];
 
             foreach ($this->files as $file) {
