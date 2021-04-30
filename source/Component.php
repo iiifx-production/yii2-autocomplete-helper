@@ -19,7 +19,7 @@ class Component extends BaseObject implements BootstrapInterface
         'ide-components' => Controller::class,
     ];
     public ?string $result = null;
-    public array $config = [];
+    public ?array $config = null;
 
     /**
      * @inheritdoc
