@@ -23,8 +23,8 @@ use yii\helpers\FileHelper;
 class Controller extends \yii\console\Controller
 {
     public string $component = 'autocomplete';
-    public string $config;
-    protected Detector $detector;
+    public ?string $config = null;
+    protected ?Detector $detector = null;
 
     /**
      * @inheritdoc
