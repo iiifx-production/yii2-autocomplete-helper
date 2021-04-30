@@ -12,7 +12,7 @@ use yii\base\BaseObject;
 
 class Builder extends BaseObject
 {
-    public string $template;
+    public ?string $template = null;
     public array $components = [];
 
     public function build(string|false $file = null): bool|string

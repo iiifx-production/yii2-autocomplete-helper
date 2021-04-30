@@ -14,7 +14,7 @@ use yii\base\BaseObject;
 
 class Detector extends BaseObject
 {
-    public Application $app;
+    public ?Application $app = null;
     public array $ids = [
         'basic-console' => 'basic',
         'app-console' => 'advanced',
@@ -50,7 +50,7 @@ class Detector extends BaseObject
     public function getConfig(): array
     {
         if ($type = $this->detect()) {
-            return isset($this->configs[$type]) ? $this->configs[$type] : [];
+            return $this->configs[$type] ?? [];
         }
 
         return [];
