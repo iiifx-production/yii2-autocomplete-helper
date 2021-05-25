@@ -28,8 +28,8 @@ class Yii extends \yii\BaseYii
 abstract class BaseApplication extends \yii\base\Application {}
 
 %phpdoc%
-class WebApplication extends \yii\web\Application {}
+class WebApplication extends %webapp% {}
 
 %phpdoc%
-class ConsoleApplication extends \yii\console\Application {}
+class ConsoleApplication extends %consoleapp% {}
 ';

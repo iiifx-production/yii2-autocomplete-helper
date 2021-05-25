@@ -246,3 +246,21 @@ php yii ide-components --config=api
 [link-downloads]: https://packagist.org/packages/iiifx-production/yii2-autocomplete-helper
 [link-travis]: https://travis-ci.org/iiifx-production/yii2-autocomplete-helper
 [link-scrutinizer]: https://scrutinizer-ci.com/g/iiifx-production/yii2-autocomplete-helper/?branch=master
+
+### Настройка классов приложений
+
+В некоторых проектах иногда могут использоваться переопределенные классы приложений для web и console. 
+
+Вы можете сделать это через соответствующую настройку в конфигурации.
+
+```php
+    'bootstrap' => ['log', 'autocomplete'],
+    'components' => [
+        'autocomplete' => [
+            'class' => 'iiifx\Yii2\Autocomplete\Component',
+            'webAppClass' => '\full\namespace\to\WebApplicationClass',
+            'consoleAppClass' => '\full\namespace\to\ConsoleApplicationClass',
+        ],
+        # ...
+    ]
+```
