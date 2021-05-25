@@ -37,6 +37,16 @@ class Component extends BaseObject implements BootstrapInterface
     public $config;
 
     /**
+     * @var string|null
+     */
+    public $webAppClass = null;
+
+    /**
+     * @var string|null
+     */
+    public $consoleAppClass = null;
+
+    /**
      * @inheritdoc
      */
     public function bootstrap($app)
