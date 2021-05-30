@@ -5,13 +5,14 @@ php:
   - 7.1
   - 7.2
   - 7.3
+  - 7.4
 
 install:
   - composer self-update
   - composer config --global github-oauth.github.com "$GITHUB_TOKEN"
   - composer --version
   - composer clear-cache
-  - composer global require "fxp/composer-asset-plugin:@stable"
+  - composer global require "fxp/composer-asset-plugin"
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - composer update --prefer-dist
 

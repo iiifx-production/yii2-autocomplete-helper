@@ -17,7 +17,7 @@
     "authors": [
         {
             "name": "Vitaliy IIIFX Khomenko",
-            "email": "iiifx@yandex.com"
+            "email": "iiifx.me@gmail.com"
         }
     ],
     "require": {
@@ -25,6 +25,7 @@
         "yiisoft/yii2": "~2.0.13"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "phpunit/phpunit": "^4|^5"
     },
     "autoload": {
