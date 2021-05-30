@@ -14,6 +14,8 @@ class Builder extends BaseObject
 {
     public ?string $template = null;
     public array $components = [];
+    public ?string $webAppClass = null;
+    public ?string $consoleAppClass = null;
 
     public function build(string|false $file = null): bool|string
     {
@@ -27,6 +29,14 @@ class Builder extends BaseObject
                 $string .= PHP_EOL . ' */';
 
                 return $string;
+            }
+
+            if ($m[0] === '%webapp%') {
+                return $this->webAppClass ?? '\yii\web\Application';
+            }
+
+            if ($m[0] === '%consoleapp%') {
+                return $this->consoleAppClass ?? '\yii\console\Application';
             }
 
             return $m[0];
