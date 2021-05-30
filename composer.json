@@ -25,6 +25,7 @@
         "yiisoft/yii2": "^2.0.36"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "phpunit/phpunit": "^9"
     },
     "autoload": {
@@ -36,9 +37,19 @@
         "test": "phpunit tests"
     },
     "config": {
+        "process-timeout": 1800,
+        "preferred-install": "dist",
+        "preferred-update": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
         "fxp-asset": {
-            "npm-asset-library": "vendor/npm-asset",
-            "bower-asset-library": "vendor/bower-asset"
+            "enabled": false
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }
