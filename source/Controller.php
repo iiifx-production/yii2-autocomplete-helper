@@ -69,6 +69,8 @@ class Controller extends \yii\console\Controller
             $builder = new Builder([
                 'components' => $config->getComponents(),
                 'template' => require __DIR__ . '/template.php',
+                'webAppClass' => $component->webAppClass,
+                'consoleAppClass' => $component->consoleAppClass,
             ]);
 
             if (null === $component->result) {
