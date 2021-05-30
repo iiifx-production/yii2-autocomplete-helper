@@ -12,7 +12,6 @@ install:
   - composer config --global github-oauth.github.com "$GITHUB_TOKEN"
   - composer --version
   - composer clear-cache
-#  - composer global require "fxp/composer-asset-plugin"
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - composer update --prefer-dist
 
