@@ -1,6 +1,6 @@
 <?php
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2019
+ * @author  Vitaliy IIIFX Khomenko (c) 2021
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
@@ -62,7 +62,7 @@ class Controller extends \yii\console\Controller
     public function showDescription()
     {
         $this->stdout("Yii2 IDE auto-completion helper\n");
-        $this->stdout("Vitaliy IIIFX Khomenko, 2019\n\n");
+        $this->stdout("Vitaliy IIIFX Khomenko, 2021\n\n");
     }
 
     /**
@@ -80,6 +80,8 @@ class Controller extends \yii\console\Controller
             $builder = new Builder([
                 'components' => $config->getComponents(),
                 'template' => require __DIR__ . '/template.php',
+                'webAppClass' => $component->webAppClass,
+                'consoleAppClass' => $component->consoleAppClass,
             ]);
             if ($component->result === null) {
                 $component->result = ($this->getDetector()->detect() === 'basic') ?

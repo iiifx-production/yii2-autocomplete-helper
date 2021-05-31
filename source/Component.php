@@ -1,6 +1,6 @@
 <?php
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2019
+ * @author  Vitaliy IIIFX Khomenko (c) 2021
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
@@ -35,6 +35,16 @@ class Component extends BaseObject implements BootstrapInterface
      * @var array
      */
     public $config;
+
+    /**
+     * @var string|null
+     */
+    public $webAppClass = null;
+
+    /**
+     * @var string|null
+     */
+    public $consoleAppClass = null;
 
     /**
      * @inheritdoc

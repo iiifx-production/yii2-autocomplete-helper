@@ -1,6 +1,6 @@
 <?php
 /**
- * @author  Vitaliy IIIFX Khomenko (c) 2019
+ * @author  Vitaliy IIIFX Khomenko (c) 2021
  * @license MIT
  *
  * @link    https://github.com/iiifx-production/yii2-autocomplete-helper
@@ -23,6 +23,16 @@ class Builder extends BaseObject
     public $components = [];
 
     /**
+     * @var string|null
+     */
+    public $webAppClass = null;
+
+    /**
+     * @var string|null
+     */
+    public $consoleAppClass = null;
+
+    /**
      * @param string|false $file
      *
      * @return bool|string
@@ -38,6 +48,15 @@ class Builder extends BaseObject
                 $string .= PHP_EOL . ' */';
                 return $string;
             }
+
+            if ($m[0] === '%webapp%') {
+                return $this->webAppClass ?? '\yii\web\Application';
+            }
+
+            if ($m[0] === '%consoleapp%') {
+                return $this->consoleAppClass ?? '\yii\console\Application';
+            }
+
             return $m[0];
         }, $this->template);
         if ($file === null) {
