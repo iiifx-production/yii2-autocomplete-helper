@@ -2,7 +2,7 @@
 
 Генератор автодополнения для пользовательских компонентов в Yii2.
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b/big.png)](https://insight.sensiolabs.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b)
+[![SensioLabsInsight](https://insight.symfony.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b/big.png)](https://insight.symfony.com/projects/38baa1e0-54e8-4cf8-bd30-3c76e8a44d9b)
 
 [![Latest Version on Packagist][ico-version]][link-packagist] 
 [![Total Downloads][ico-downloads]][link-downloads]
@@ -233,20 +233,6 @@ php yii my-custom-generator
 php yii ide-components --config=api
 ```
 
-
-
-[ico-version]: https://img.shields.io/packagist/v/iiifx-production/yii2-autocomplete-helper.svg
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
-[ico-downloads]: https://img.shields.io/packagist/dt/iiifx-production/yii2-autocomplete-helper.svg
-[ico-travis]: https://travis-ci.org/iiifx-production/yii2-autocomplete-helper.svg
-[ico-scrutinizer]: https://scrutinizer-ci.com/g/iiifx-production/yii2-autocomplete-helper/badges/quality-score.png?b=master
-[ico-codecoverage]: https://scrutinizer-ci.com/g/iiifx-production/yii2-autocomplete-helper/badges/coverage.png?b=master
-
-[link-packagist]: https://packagist.org/packages/iiifx-production/yii2-autocomplete-helper
-[link-downloads]: https://packagist.org/packages/iiifx-production/yii2-autocomplete-helper
-[link-travis]: https://travis-ci.org/iiifx-production/yii2-autocomplete-helper
-[link-scrutinizer]: https://scrutinizer-ci.com/g/iiifx-production/yii2-autocomplete-helper/?branch=master
-
 ### Настройка классов приложений
 
 В некоторых проектах иногда могут использоваться переопределенные классы приложений для web и console.
@@ -264,3 +250,17 @@ php yii ide-components --config=api
         # ...
     ]
 ```
+
+
+
+[ico-version]: https://img.shields.io/packagist/v/iiifx-production/yii2-autocomplete-helper.svg
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
+[ico-downloads]: https://img.shields.io/packagist/dt/iiifx-production/yii2-autocomplete-helper.svg
+[ico-travis]: https://travis-ci.com/iiifx-production/yii2-autocomplete-helper.svg
+[ico-scrutinizer]: https://scrutinizer-ci.com/g/iiifx-production/yii2-autocomplete-helper/badges/quality-score.png?b=master
+[ico-codecoverage]: https://scrutinizer-ci.com/g/iiifx-production/yii2-autocomplete-helper/badges/coverage.png?b=master
+
+[link-packagist]: https://packagist.org/packages/iiifx-production/yii2-autocomplete-helper
+[link-downloads]: https://packagist.org/packages/iiifx-production/yii2-autocomplete-helper
+[link-travis]: https://travis-ci.com/iiifx-production/yii2-autocomplete-helper
+[link-scrutinizer]: https://scrutinizer-ci.com/g/iiifx-production/yii2-autocomplete-helper/?branch=master
