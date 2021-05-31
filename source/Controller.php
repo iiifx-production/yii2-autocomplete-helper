@@ -80,6 +80,8 @@ class Controller extends \yii\console\Controller
             $builder = new Builder([
                 'components' => $config->getComponents(),
                 'template' => require __DIR__ . '/template.php',
+                'webAppClass' => $component->webAppClass,
+                'consoleAppClass' => $component->consoleAppClass,
             ]);
             if ($component->result === null) {
                 $component->result = ($this->getDetector()->detect() === 'basic') ?
